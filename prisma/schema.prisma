@@ -18,5 +18,49 @@ model Review {
   title     String
   content   String
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+}
+
+model Article {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  content   String
+  image     String
+  slug      String   @unique
+  createdAt DateTime @default(now())
+}
+
+model User {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  username String @unique
+  password String
+  createdAt DateTime @default(now())
+}
+
+model Devis {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  nom       String
+  prenom    String
+  email     String
+  service   String
+  message   String
+  createdAt DateTime @default(now())
+}
+
+model ContactQuery {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  nom       String
+  email     String
+  sujet   String
+  message   String
+  createdAt DateTime @default(now())
+}
+
+model SeoMetadata {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  pageName    String   @unique
+  title       String
+  description String
+  keywords    String
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
 }

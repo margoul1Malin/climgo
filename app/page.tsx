@@ -4,6 +4,13 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import Image from 'next/image';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'ClimGo - Solutions de Climatisation et Pompes à Chaleur en France',
+  description: 'Découvrez les solutions de climatisation et pompes à chaleur de ClimGo pour un confort optimal. Installation, entretien et devis gratuit partout en France.',
+  keywords: 'climatisation France, pompes à chaleur, installation climatisation, devis gratuit climatisation, entretien pompes à chaleur',
+};
 
 export default function Home() {
   return (
@@ -30,7 +37,7 @@ export default function Home() {
         {/* Services Section */}
         <section className="py-12 md:py-16 bg-white">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-8 md:mb-12 text-gray-800">Nos Services</h2>
+            <h1 className="text-3xl font-bold text-center mb-8 md:mb-12 text-gray-800">Nos Services</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
               <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
                 <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4 mx-auto md:mx-0">
@@ -66,9 +73,9 @@ export default function Home() {
 
         {/* About Section */}
         <section className="py-12 md:py-16 bg-white">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-8 md:mb-12 text-gray-800">Pourquoi choisir ClimGo ?</h2>
-            <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 max-w-5xl mx-auto">
+          <div className="w-fullmx-auto px-4">
+            <h1 className="text-3xl font-bold text-center mb-8 md:mb-12 text-gray-800">Pourquoi choisir ClimGo ?</h1>
+            <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 max-w-6xl mx-auto">
               <div className="md:w-5/12 bg-white p-6 md:p-8 rounded-lg shadow-md">
                 <h3 className="text-2xl font-semibold mb-4 text-gray-800">Expertise & Qualité</h3>
                 <p className="text-gray-600 mb-4">Avec des années d’expérience, ClimGo s’engage à fournir des solutions adaptées à vos besoins spécifiques, avec des produits de haute qualité.</p>
@@ -84,7 +91,7 @@ export default function Home() {
         {/* Call to Action */}
         <section className="text-center bg-blue-50 py-12 md:py-16">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-4 md:mb-6 text-gray-800">Prêt à améliorer votre confort ?</h2>
+            <h1 className="text-3xl font-bold mb-4 md:mb-6 text-gray-800">Prêt à améliorer votre confort ?</h1>
             <p className="text-lg md:text-xl text-gray-600 mb-6 md:mb-8 max-w-2xl mx-auto">Contactez-nous dès aujourd’hui pour un devis gratuit ou pour en savoir plus sur nos solutions.</p>
             <div className="flex flex-col sm:flex-row justify-center gap-4 md:gap-6">
               <Button asChild variant="default" size="lg" className="bg-blue-600 text-white hover:bg-blue-700 py-2 px-4 md:py-3 md:px-6 text-base md:text-lg">
@@ -100,7 +107,7 @@ export default function Home() {
         {/* Aides de l'État */}
         <section className="text-center bg-white py-12 md:py-16">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-6 md:mb-8 text-gray-800">Profitez des <strong>aides de l&apos;État</strong> pour vos travaux</h2>
+            <h1 className="text-3xl font-bold mb-6 md:mb-8 text-gray-800">Profitez des <strong>aides de l&apos;État</strong> pour vos travaux</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-5xl mx-auto mt-6 md:mt-8">
               <div className="bg-green-50 p-6 rounded-lg border border-green-200">
                 <h3 className="text-xl font-semibold mb-3 text-green-700">MaPrimeRénov’</h3>
@@ -125,7 +132,7 @@ export default function Home() {
         {/* FAQ Section */}
         <section className="py-12 md:py-16 bg-gray-50" itemScope itemType="https://schema.org/FAQPage">
           <div className="max-w-7xl mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-8 md:mb-12 text-gray-800">Questions Fréquentes sur la <strong>Climatisation</strong> et les <strong>Pompes à Chaleur</strong></h2>
+            <h1 className="text-3xl font-bold text-center mb-8 md:mb-12 text-gray-800">Questions Fréquentes sur la <strong>Climatisation</strong> et les <strong>Pompes à Chaleur</strong></h1>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-7xl mx-auto">
               <div className="space-y-6 md:space-y-0 md:flex md:flex-col md:gap-6">
                 <div className="bg-white p-6 rounded-lg shadow-md w-full h-64" itemScope itemProp="mainEntity" itemType="https://schema.org/Question">

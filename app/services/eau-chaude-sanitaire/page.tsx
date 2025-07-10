@@ -2,6 +2,13 @@ import { Button } from '@/components/ui/button';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Eau Chaude Sanitaire - ClimGo',
+  description: 'Découvrez nos solutions d’eau chaude sanitaire économiques et écologiques. Installation, entretien et devis gratuit partout en France.',
+  keywords: 'eau chaude sanitaire, installation eau chaude sanitaire, entretien eau chaude sanitaire, devis eau chaude sanitaire, climatisation Arcachon',
+};
 
 export default function EauChaudeSanitaire() {
   return (

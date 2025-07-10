@@ -1,16 +1,71 @@
+"use client";
+
+import { useState } from 'react';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import { Textarea } from '@/components/ui/textarea';
 import Link from 'next/link';
 
 export default function Contact() {
+  const [nom, setNom] = useState('');
+  const [email, setEmail] = useState('');
+  const [sujet, setSujet] = useState('');
+  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    if (!nom || !email || !sujet || !message) {
+      setError('Veuillez remplir tous les champs obligatoires.');
+      setLoading(false);
+      return;
+    }
+
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
+      setError('Adresse email invalide.');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ nom, email, sujet, message }),
+      });
+
+      if (res.ok) {
+        setSuccess(true);
+        setNom('');
+        setEmail('');
+        setSujet('');
+        setMessage('');
+      } else {
+        const errorData = await res.json();
+        setError(errorData.error || 'Erreur lors de l\'envoi de la demande.');
+      }
+    } catch (err) {
+      console.error('Erreur lors de l\'envoi de la demande:', err);
+      setError('Une erreur s\'est produite. Veuillez réessayer plus tard.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-white text-gray-900">
       <Header />
       <main className="container mx-auto px-4 py-12 mb-12 flex-grow">
-
         {/* Section d'introduction - Contenu SEO avec mise en page unique */}
         <section className="mb-16 text-center">
           <h2 className="text-3xl font-bold mb-6 text-gray-800">Une question sur nos <strong>solutions thermiques</strong> ? Contactez-nous !</h2>
@@ -25,55 +80,78 @@ export default function Contact() {
           {/* Formulaire de contact - Colonne de gauche (3/5) */}
           <div className="md:col-span-3 bg-white p-8 rounded-xl shadow-lg border border-teal-200">
             <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">Envoyez-nous un message</h2>
-            <form className="space-y-6">
-              <div className="grid grid-cols-1 gap-6">
-                <div>
-                  <Label htmlFor="nom" className="block mb-2 text-gray-700">Votre nom</Label>
-                  <Input
-                    id="nom"
-                    type="text"
-                    placeholder="Votre nom complet"
-                    className="w-full border-gray-300 focus:border-teal-500 focus:ring-teal-500"
-                    required
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="email" className="block mb-2 text-gray-700">Votre email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="exemple@domaine.com"
-                    className="w-full border-gray-300 focus:border-teal-500 focus:ring-teal-500"
-                    required
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="sujet" className="block mb-2 text-gray-700">Sujet</Label>
-                  <Input
-                    id="sujet"
-                    type="text"
-                    placeholder="Objet de votre message"
-                    className="w-full border-gray-300 focus:border-teal-500 focus:ring-teal-500"
-                    required
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="message" className="block mb-2 text-gray-700">Votre message</Label>
-                  <textarea
-                    id="message"
-                    placeholder="Décrivez votre demande ou question..."
-                    className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 min-h-[150px]"
-                    required
-                  />
-                </div>
+            {success ? (
+              <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-xl mb-6 text-center transform transition-all duration-300">
+                <p>Votre demande de contact a été envoyée avec succès. Nous vous répondrons bientôt !</p>
               </div>
-              <div className="text-center">
-                <Button type="submit" className="bg-teal-600 text-white hover:bg-teal-700 w-full md:w-auto px-6 py-2">
-                  Envoyer mon message
-                </Button>
-                <p className="text-sm text-gray-500 mt-2">En soumettant ce formulaire, vous acceptez que ClimGo traite vos données pour répondre à votre demande.</p>
-              </div>
-            </form>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {error && (
+                  <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl text-sm transform transition-all duration-300">
+                    <p>{error}</p>
+                  </div>
+                )}
+                <div className="grid grid-cols-1 gap-6">
+                  <div>
+                    <Label htmlFor="nom" className="block mb-2 text-gray-700">Votre nom</Label>
+                    <Input
+                      id="nom"
+                      type="text"
+                      value={nom}
+                      onChange={(e) => setNom(e.target.value)}
+                      required
+                      placeholder="Votre nom complet"
+                      className={`w-full border ${nom ? 'border-green-500 focus:ring-green-500' : 'border-gray-300'} focus:ring-2 focus:outline-none rounded-lg`}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="email" className="block mb-2 text-gray-700">Votre email</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      placeholder="exemple@domaine.com"
+                      className={`w-full border ${email ? /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email) ? 'border-green-500 focus:ring-green-500' : 'border-red-500 focus:ring-red-500' : 'border-gray-300'} focus:ring-2 focus:outline-none rounded-lg`}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="sujet" className="block mb-2 text-gray-700">Sujet</Label>
+                    <Input
+                      id="sujet"
+                      type="text"
+                      value={sujet}
+                      onChange={(e) => setSujet(e.target.value)}
+                      required
+                      placeholder="Objet de votre message"
+                      className={`w-full border ${sujet ? 'border-green-500 focus:ring-green-500' : 'border-gray-300'} focus:ring-2 focus:outline-none rounded-lg`}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="message" className="block mb-2 text-gray-700">Votre message</Label>
+                    <Textarea
+                      id="message"
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      required
+                      placeholder="Décrivez votre demande ou question..."
+                      className={`w-full border ${message ? 'border-green-500 focus:ring-green-500' : 'border-gray-300'} focus:ring-2 focus:outline-none rounded-lg min-h-[150px]`}
+                    />
+                  </div>
+                </div>
+                <div className="text-center">
+                  <Button
+                    type="submit"
+                    disabled={loading}
+                    className="bg-teal-600 text-white hover:bg-teal-700 w-full md:w-auto px-6 py-2 transition-all duration-300"
+                  >
+                    {loading ? 'Envoi en cours...' : 'Envoyer mon message'}
+                  </Button>
+                  <p className="text-sm text-gray-500 mt-2">En soumettant ce formulaire, vous acceptez que ClimGo traite vos données pour répondre à votre demande.</p>
+                </div>
+              </form>
+            )}
           </div>
           {/* Informations de contact - Colonne de droite (2/5) avec style visuel innovant */}
           <div className="md:col-span-2 bg-teal-50 p-8 rounded-xl border border-teal-200 relative overflow-hidden">

@@ -2,6 +2,13 @@ import { Button } from '@/components/ui/button';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'ClimGo - À propos',
+  description: 'Découvrez l’histoire de ClimGo S.A.S, une entreprise passionnée par le confort et les solutions énergétiques innovantes.',
+  keywords: 'à propos climatisation, à propos climatisation Arcachon, à propos climatisation Arcachon, climatisation Arcachon',
+};
 
 export default function APropos() {
   return (

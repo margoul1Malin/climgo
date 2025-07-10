@@ -2,20 +2,23 @@ import { Button } from '@/components/ui/button';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'ClimGo - Services de Climatisation et Pompes à Chaleur',
+  description: 'Explorez nos services de climatisation, pompes à chaleur, eau chaude sanitaire et entretien. Solutions éco-énergétiques pour votre confort en France.',
+  keywords: 'services climatisation, pompes à chaleur services, entretien climatisation, installation pompes à chaleur France, eau chaude sanitaire, climatisation Arcachon, clim, eau sanitaire, climatisation Arcachon',
+};
 
 export default function Services() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="container mx-auto px-4 py-12 mb-12 flex-grow">
-        {/* Hero Section - Transition de couleur */}
-        <section className="relative bg-gradient-to-br from-blue-700 to-green-700 text-white py-20 mb-12 rounded-xl overflow-hidden">
-          <div className="absolute inset-0 opacity-20">
-            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC40Ij48cGF0aCBkPSJNMzYgMzRjMCAxIDEgMiAyIDJoMnYtNGgtMmMtMSAwLTIgMS0yIDJ6TTMwIDRDMTMuNDMxIDQgMCAxNy40MzEgMCAzNHMxMy40MzEgMzAgMzAgMzAgMzAtMTMuNDMxIDMwLTMwUzQ2LjU2OSA0IDMwIDR6TTEwLjIyNSA0Mi42OGMtMi45MS0zLjk5LTMuOTYsOS45NDYsMS41MDYsMTUuMDU2QzE3LjE5NSA1My4yNDYsMzAuNDEsNTQuMTYsMzQuNDYsNDguOTMsMzguNTA5LDQzLjcwMSwzNy41OTMsMzAuNDMsMzIuMTMsMjUuMDMsMjYuNjc2LDE5LjYzLDEzLjE2NSwyMS41MSwxMC4yMjUsNDIuNjh6Ii8+PC9nPjwvZz48L3N2ZyA=')] bg-repeat" />
-          </div>
-          <div className="container mx-auto px-4 relative z-10">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Nos <strong>Services</strong> chez ClimGo</h1>
-            <p className="text-xl md:text-2xl mb-8 max-w-3xl">Découvrez notre gamme complète de solutions pour le <strong>chauffage</strong>, la <strong>climatisation</strong> et l’<strong>eau chaude sanitaire</strong>. Chez ClimGo, nous vous accompagnons dans l’installation, l’entretien et la réparation de vos systèmes pour un confort optimal toute l’année.</p>
+      <main className="flex-grow">
+        <section className="py-12 md:py-16 bg-blue-50">
+          <div className="container mx-auto px-4 text-center">
+            <h1 className="text-3xl md:text-5xl font-bold text-blue-800 mb-4 md:mb-6">Nos Services de Climatisation et Pompes à Chaleur</h1>
+            <p className="text-lg md:text-xl text-gray-600 mb-6 md:mb-8 max-w-3xl mx-auto">Découvrez nos solutions complètes pour votre confort thermique toute l’année.</p>
             <Link href="/devis" passHref>
               <Button variant="secondary" size="lg" className="bg-white text-blue-700 hover:bg-gray-100 cursor-pointer">
                 Obtenir un devis personnalisé

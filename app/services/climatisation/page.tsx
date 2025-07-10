@@ -3,6 +3,13 @@ import { Button } from '@/components/ui/button';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Climatisation - ClimGo',
+  description: 'Découvrez nos solutions de climatisation performantes et économes en énergie. Installation, entretien et devis gratuit partout en France.',
+  keywords: 'climatisation, installation climatisation, entretien climatisation, devis climatisation, climatisation Arcachon',
+};
 
 export default function Climatisation() {
   return (

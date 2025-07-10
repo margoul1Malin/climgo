@@ -1,5 +1,12 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Entretien et Réparation - ClimGo',
+  description: 'Découvrez nos services d’entretien et de réparation pour vos pompes à chaleur et climatisations. Maintenance et réparation de qualité partout en France.',
+  keywords: 'entretien pompes à chaleur, réparation pompes à chaleur, entretien climatisation, réparation climatisation, climatisation Arcachon',
+};
 
 export default function EntretienEtReparation() {
   return (

@@ -3,6 +3,13 @@ import { Button } from '@/components/ui/button';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Pompes à Chaleur - ClimGo',
+  description: 'Découvrez nos pompes à chaleur innovantes pour un chauffage écologique et économique. Installation, entretien et devis gratuit partout en France.',
+  keywords: 'pompes à chaleur, installation pompes à chaleur, entretien pompes à chaleur, devis pompes à chaleur, climatisation Arcachon',
+};
 
 export default function PompesAChaleur() {
   return (

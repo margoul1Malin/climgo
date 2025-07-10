@@ -1,3 +1,4 @@
+"use client"
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -11,8 +12,56 @@ import {
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import type { Metadata } from 'next';
+
+
 
 export default function Devis() {
+  const [nom, setNom] = useState('');
+  const [prenom, setPrenom] = useState('');
+  const [email, setEmail] = useState('');
+  const [service, setService] = useState('climatisation');
+  const [message, setMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('/api/devis', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ nom, prenom, email, service, message }),
+      });
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setNom('');
+        setPrenom('');
+        setEmail('');
+        setService('climatisation');
+        setMessage('');
+        setTimeout(() => {
+          router.push('/');
+        }, 3000);
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Erreur lors de l\'envoi du devis:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
@@ -33,8 +82,42 @@ export default function Devis() {
 
           <section className="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-lg border border-gray-200 mb-16">
             <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">Formulaire de demande de <strong>devis</strong></h2>
-            <form className="space-y-6">
+            {submitStatus === 'success' && (
+              <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+                Votre demande de devis a été envoyée avec succès. Nous vous contacterons bientôt !
+              </div>
+            )}
+            {submitStatus === 'error' && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                Une erreur s'est produite lors de l'envoi de votre demande. Veuillez réessayer.
+              </div>
+            )}
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 gap-6">
+                <div>
+                  <Label htmlFor="nom" className="block mb-2 text-gray-700">Votre nom</Label>
+                  <Input
+                    id="nom"
+                    type="text"
+                    placeholder="Votre nom"
+                    className="w-full border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                    required
+                    value={nom}
+                    onChange={(e) => setNom(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="prenom" className="block mb-2 text-gray-700">Votre prénom</Label>
+                  <Input
+                    id="prenom"
+                    type="text"
+                    placeholder="Votre prénom"
+                    className="w-full border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                    required
+                    value={prenom}
+                    onChange={(e) => setPrenom(e.target.value)}
+                  />
+                </div>
                 <div>
                   <Label htmlFor="email" className="block mb-2 text-gray-700">Votre email</Label>
                   <Input
@@ -43,11 +126,13 @@ export default function Devis() {
                     placeholder="exemple@domaine.com"
                     className="w-full border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                     required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
                 <div>
                   <Label htmlFor="service" className="block mb-2 text-gray-700">Type de service</Label>
-                  <Select defaultValue="climatisation">
+                  <Select value={service} onValueChange={setService}>
                     <SelectTrigger className="w-full border-gray-300 focus:border-blue-500 focus:ring-blue-500">
                       <SelectValue placeholder="Sélectionnez un service" />
                     </SelectTrigger>
@@ -66,12 +151,14 @@ export default function Devis() {
                     placeholder="Décrivez votre projet ou vos besoins spécifiques..."
                     className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[150px]"
                     required
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
                   />
                 </div>
               </div>
               <div className="text-center">
-                <Button type="submit" className="bg-blue-600 text-white hover:bg-blue-700 w-full md:w-auto px-6 py-2">
-                  Envoyer ma demande de devis
+                <Button type="submit" className="bg-blue-600 text-white hover:bg-blue-700 w-full md:w-auto px-6 py-2" disabled={isSubmitting}>
+                  {isSubmitting ? 'Envoi en cours...' : 'Envoyer ma demande de devis'}
                 </Button>
                 <p className="text-sm text-gray-500 mt-2">En soumettant ce formulaire, vous acceptez que ClimGo traite vos données pour répondre à votre demande.</p>
               </div>
