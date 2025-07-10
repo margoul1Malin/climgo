@@ -1,71 +1,107 @@
-import { NextResponse } from 'next/server';
-import prismadb from '@/lib/prismadb';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
+"use client";
 
-export default async function DevisAdmin() {
-  try {
-    const devisList = await prismadb.devis.findMany({
-      orderBy: {
-        createdAt: 'desc'
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import Link from "next/link";
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+
+export default function DevisPage() {
+  const router = useRouter();
+  const { data: session, status } = useSession();
+  const [devis, setDevis] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.push('/admin');
+    } else if (status === 'authenticated') {
+      fetchDevis();
+    }
+  }, [status, router]);
+
+  const fetchDevis = async () => {
+    try {
+      setLoading(true);
+      setError('');
+      const res = await fetch('/api/devis');
+      if (res.ok) {
+        const data = await res.json();
+        setDevis(data);
+      } else {
+        setError('Erreur lors de la récupération des devis : Route API non trouvée ou erreur serveur');
       }
-    });
+    } catch (err) {
+      setError('Erreur lors de la récupération des devis : ' + (err instanceof Error ? err.message : 'Erreur inconnue'));
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  if (status === 'loading') {
     return (
       <div className="flex flex-col min-h-screen bg-gray-50">
-        <main className="flex-grow container mx-auto px-4 py-12">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Gestion des Demandes de Devis</h1>
-          <Button className="mb-6 bg-blue-600 text-white hover:bg-blue-700" disabled>
-            Nouvelle demande (non disponible)
-          </Button>
-          <Link href="/admin" passHref>
-            <Button variant="outline" className="mb-6 ml-4 text-blue-600 border-blue-600 hover:bg-blue-50">
-              Retour au panneau d&apos;administration
-            </Button>
-          </Link>
-
-          {devisList.length === 0 ? (
-            <div className="bg-white border border-gray-200 rounded-lg shadow-md p-6 text-center">
-              <p className="text-gray-600">Aucune demande de devis pour le moment.</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 gap-4">
-              {devisList.map((devis) => (
-                <div key={devis.id} className="bg-white border border-gray-200 rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow duration-300">
-                  <h2 className="text-xl font-semibold text-gray-800 mb-2">{devis.nom} {devis.prenom}</h2>
-                  <p className="text-gray-600 mb-2">Email: {devis.email}</p>
-                  <p className="text-gray-600 mb-2">Service: {devis.service}</p>
-                  <p className="text-gray-600 mb-4 line-clamp-3">Message: {devis.message}</p>
-                  <p className="text-sm text-gray-500">Reçu le: {new Date(devis.createdAt).toLocaleDateString()}</p>
-                  <div className="mt-4">
-                    <Link href={`/admin/devis/${devis.id}`} passHref>
-                      <Button variant="outline" size="sm" className="text-blue-600 border-blue-600 hover:bg-blue-50">Voir les détails</Button>
-                    </Link>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+        <Header />
+        <main className="flex-grow container mx-auto px-4 py-12 flex items-center justify-center">
+          <p className="text-gray-600">Chargement...</p>
         </main>
-      </div>
-    );
-  } catch (error) {
-    console.error('Erreur lors de la récupération des devis:', error);
-    return (
-      <div className="flex flex-col min-h-screen bg-gray-50">
-        <main className="flex-grow container mx-auto px-4 py-12">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Erreur</h1>
-          <Link href="/admin" passHref>
-            <Button variant="outline" className="mb-6 text-blue-600 border-blue-600 hover:bg-blue-50">
-              Retour au panneau d\'administration
-            </Button>
-          </Link>
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-            <p>Une erreur s'est produite lors de la récupération des demandes de devis. Veuillez réessayer plus tard.</p>
-          </div>
-        </main>
+        <Footer />
       </div>
     );
   }
+
+  if (!session) {
+    return null; // Redirection gérée par useEffect
+  }
+
+  return (
+    <div className="flex flex-col min-h-screen bg-gray-50">
+      <Header />
+      <main className="flex-grow container mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold text-gray-800 mb-6">Gestion des Devis</h1>
+        {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+        {loading ? (
+          <p className="text-gray-600">Chargement des devis...</p>
+        ) : (
+          <div className="bg-white rounded-lg shadow-lg p-6 mb-8 border border-gray-100">
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden">
+                <thead className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nom</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Email</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Téléphone</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {devis.length === 0 ? (
+                    <tr>
+                      <td colSpan={4} className="px-6 py-4 text-center text-gray-500">Aucun devis trouvé.</td>
+                    </tr>
+                  ) : (
+                    devis.map((item) => (
+                      <tr key={item.id} className="hover:bg-gray-50 transition duration-200">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{item.name || item.nom || 'Nom non disponible'}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{item.email || 'Email non disponible'}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{item.phone || item.telephone || 'Téléphone non disponible'}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                          <Link href={`/admin/devis/${item.id}`} className="text-indigo-600 hover:text-indigo-900 transition duration-200">Voir Détails</Link>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+        <button onClick={() => router.push('/admin')} className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:scale-105">Retour au panneau d&apos;administration</button>
+      </main>
+      <Footer />
+    </div>
+  );
 } 

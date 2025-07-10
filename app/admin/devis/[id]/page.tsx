@@ -1,8 +1,6 @@
-import { NextResponse } from 'next/server';
 import prismadb from '@/lib/prismadb';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
 
 export default async function DevisDetail({ params }: { params: { id: string } }) {
   try {
@@ -16,7 +14,7 @@ export default async function DevisDetail({ params }: { params: { id: string } }
           <main className="flex-grow container mx-auto px-4 py-12 flex flex-col items-center justify-center">
             <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Demande de Devis Introuvable</h1>
             <div className="bg-white border border-gray-200 rounded-lg shadow-md p-6 text-center max-w-md w-full">
-              <p className="text-gray-600">La demande de devis avec cet ID n'existe pas.</p>
+              <p className="text-gray-600">La demande de devis avec cet ID n&apos;existe pas.</p>
             </div>
             <Link href="/admin/devis" passHref>
               <Button variant="outline" size="lg" className="mt-6 text-blue-600 border-blue-600 hover:bg-blue-50">
@@ -55,7 +53,7 @@ export default async function DevisDetail({ params }: { params: { id: string } }
         <main className="flex-grow container mx-auto px-4 py-12 flex flex-col items-center justify-center">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Erreur</h1>
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded max-w-md w-full">
-            <p>Une erreur s'est produite lors de la récupération des détails du devis. Veuillez réessayer plus tard.</p>
+            <p>Une erreur s&apos;est produite lors de la récupération des détails du devis. Veuillez réessayer plus tard.</p>
           </div>
           <Link href="/admin/devis" passHref>
             <Button variant="outline" size="lg" className="mt-6 text-blue-600 border-blue-600 hover:bg-blue-50">

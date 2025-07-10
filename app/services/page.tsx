@@ -1,107 +1,409 @@
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'ClimGo - Services de Climatisation et Pompes à Chaleur',
-  description: 'Explorez nos services de climatisation, pompes à chaleur, eau chaude sanitaire et entretien. Solutions éco-énergétiques pour votre confort en France.',
-  keywords: 'services climatisation, pompes à chaleur services, entretien climatisation, installation pompes à chaleur France, eau chaude sanitaire, climatisation Arcachon, clim, eau sanitaire, climatisation Arcachon',
-};
 
 export default function Services() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-slate-50 via-gray-50 to-blue-50">
       <Header />
+      
       <main className="flex-grow">
-        <section className="py-12 md:py-16 bg-blue-50">
-          <div className="container mx-auto px-4 text-center">
-            <h1 className="text-3xl md:text-5xl font-bold text-blue-800 mb-4 md:mb-6">Nos Services de Climatisation et Pompes à Chaleur</h1>
-            <p className="text-lg md:text-xl text-gray-600 mb-6 md:mb-8 max-w-3xl mx-auto">Découvrez nos solutions complètes pour votre confort thermique toute l’année.</p>
+        {/* Hero Section Ultra Moderne */}
+        <section className="relative py-24 md:py-32 overflow-hidden">
+          {/* Background Pattern */}
+          <div className="absolute inset-0 opacity-5">
+            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPjxwYXRoIGQ9Ik0gMTAwIDAgTCAwIDAgMCAxMDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] bg-repeat" />
+          </div>
+          
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-green-600/20" />
+          
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="text-center max-w-5xl mx-auto">
+              {/* Badge */}
+              <div className="inline-flex items-center bg-gradient-to-r from-blue-100 to-green-100 backdrop-blur-sm rounded-full px-6 py-3 mb-8 border border-blue-200/50">
+                <div className="w-2 h-2 bg-green-500 rounded-full mr-3 animate-pulse"></div>
+                <span className="text-sm font-semibold text-gray-700">Solutions Énergétiques Innovantes</span>
+              </div>
+              
+              {/* Main Title */}
+              <h1 className="text-4xl md:text-7xl font-bold mb-8 leading-tight">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-green-600">
+                  Nos Services
+                </span>
+                <br />
+                <span className="text-gray-800">
+                  Climatiques Premium
+                </span>
+              </h1>
+              
+              {/* Subtitle */}
+              <p className="text-xl md:text-2xl text-gray-600 mb-12 leading-relaxed max-w-4xl mx-auto">
+                Découvrez nos solutions complètes pour votre <strong>confort thermique</strong> toute l&apos;année. 
+                Des installations haute performance aux services d&apos;entretien expert.
+              </p>
+              
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
             <Link href="/devis" passHref>
-              <Button variant="secondary" size="lg" className="bg-white text-blue-700 hover:bg-gray-100 cursor-pointer">
-                Obtenir un devis personnalisé
+                  <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold px-8 py-4 rounded-2xl shadow-lg transform hover:scale-105 transition-all duration-200">
+                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Devis Gratuit Express
+                  </Button>
+                </Link>
+                <Link href="/contact" passHref>
+                  <Button variant="outline" size="lg" className="border-2 bg-white/80 backdrop-blur-sm border-gray-300 text-gray-700 hover:bg-white hover:border-blue-400 font-semibold px-8 py-4 rounded-2xl transition-all duration-200">
+                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                    Conseil Expert
               </Button>
             </Link>
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* Introduction - Contenu riche pour SEO */}
-        <section className="mb-16 text-center">
-          <h2 className="text-3xl font-bold mb-6 text-gray-800">Des solutions adaptées à vos besoins en <strong>énergie</strong> et <strong>confort</strong></h2>
-          <p className="text-lg text-gray-600 max-w-4xl mx-auto mb-6">Chez ClimGo, nous comprenons l’importance d’un foyer confortable et économe en énergie. C’est pourquoi nous proposons une large gamme de <strong>services</strong> pour répondre à vos besoins spécifiques, que vous cherchiez à installer une <strong>climatisation</strong> pour l’été, une <strong>pompe à chaleur</strong> pour un chauffage écologique, ou un système d’<strong>eau chaude sanitaire</strong> performant. Nos experts interviennent dans toute la France pour vous offrir des installations de qualité, un <strong>entretien régulier</strong> et des <strong>réparations rapides</strong> en cas de panne. Grâce à notre expertise, vous pouvez réduire vos factures énergétiques tout en respectant l’environnement avec des solutions utilisant des <strong>énergies renouvelables</strong>.</p>
-          <p className="text-lg text-gray-600 max-w-4xl mx-auto">Nous travaillons avec les meilleures marques et technologies pour garantir la fiabilité et la durabilité de vos équipements. De plus, nous vous accompagnons dans l’obtention des <strong>aides de l’État</strong> comme MaPrimeRénov’ ou l’Éco-PTZ pour rendre vos projets plus accessibles. Explorez ci-dessous nos différents services et découvrez comment ClimGo peut transformer votre maison en un espace de confort et d’efficacité énergétique.</p>
-        </section>
-
-        {/* Services Section - Maillage interne */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">Nos <strong>services</strong> pour votre confort</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <Link href="/services/climatisation" passHref>
-                <div className="bg-white p-6 rounded-lg shadow-md border border-blue-200 hover:shadow-lg transition-shadow">
-                <h3 className="text-xl font-semibold mb-3 text-blue-700">Climatisation</h3>
-                <p className="text-gray-600 mb-4">Restez au frais avec nos systèmes de <strong>climatisation</strong> performants, adaptés à tous types de logements. Que ce soit pour une installation monosplit ou multisplit, nous vous offrons des solutions sur mesure pour un confort optimal durant les chaudes journées d’été. Nos modèles réversibles vous permettent également de chauffer votre maison en hiver, réduisant ainsi vos dépenses énergétiques.</p>
-                    <Button variant="outline" size="sm" className="border-blue-600 text-blue-600 hover:bg-blue-50">En savoir plus</Button>
+        {/* Services Cards - Design Ultra Moderne */}
+        <section className="py-16 relative">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-800">
+                Nos <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-green-600">Expertises</span>
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Quatre domaines d&apos;excellence pour votre confort et vos économies d&apos;énergie
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+              
+              {/* Climatisation Card */}
+              <Link href="/services/climatisation" className="group block h-full w-full">
+                <div className="relative bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-green-200 transform hover:scale-105 h-[480px]">
+                  {/* Gradient Background */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
+                  
+                  {/* Icon Container */}
+                  <div className="relative p-8 pb-6 h-full flex flex-col">
+                    <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                      <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                      </svg>
+                    </div>
+                    
+                    <h3 className="text-2xl font-bold text-gray-800 mb-4 group-hover:text-green-700 transition-colors">
+                      Climatisation
+                    </h3>
+                    
+                    <p className="text-gray-600 mb-6 leading-relaxed flex-grow">
+                      Systèmes de climatisation haute performance pour un confort optimal. 
+                      <strong>Réversible</strong> pour chauffer en hiver et refroidir en été.
+                    </p>
+                    
+                    {/* Features */}
+                    <div className="space-y-2 mb-6">
+                      <div className="flex items-center text-sm text-gray-600">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
+                        Installation murale & cassette
+                      </div>
+                      <div className="flex items-center text-sm text-gray-600">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
+                        Technologie inverter
+                      </div>
+                      <div className="flex items-center text-sm text-gray-600">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
+                        Contrôle intelligent
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center justify-between">
+                      <span className="text-green-600 font-semibold text-sm"></span>
+                      <div className="flex items-center text-green-600 font-semibold group-hover:translate-x-1 transition-transform duration-200">
+                        <span className="text-sm mr-1">Découvrir</span>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
                 </div>
             </Link>
 
-            <Link href="/services/pompes-a-chaleur" passHref>
-                <div className="bg-white p-6 rounded-lg shadow-md border border-blue-200 hover:shadow-lg transition-shadow">
-                <h3 className="text-xl font-semibold mb-3 text-blue-700">Pompes à Chaleur</h3>
-                <p className="text-gray-600 mb-4">Optez pour une solution de <strong>chauffage écologique</strong> avec nos <strong>pompes à chaleur</strong> air-eau ou air-air. Ces systèmes captent les calories de l’air extérieur pour chauffer votre intérieur, offrant une alternative économique et respectueuse de l’environnement aux chaudières traditionnelles. Profitez des <strong>aides financières</strong> pour réduire le coût d’installation.</p>
-                    <Button variant="outline" size="sm" className="border-blue-600 text-blue-600 hover:bg-blue-50">En savoir plus</Button>
+              {/* Chauffage Card */}
+              <Link href="/services/pompes-a-chaleur" className="group block h-full w-full">
+                <div className="relative bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-red-200 transform hover:scale-105 h-[480px]">
+                  {/* Gradient Background */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
+                  
+                  {/* Icon Container */}
+                  <div className="relative p-8 pb-6 h-full flex flex-col">
+                    <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-orange-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                      <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    </div>
+                    
+                    <h3 className="text-2xl font-bold text-gray-800 mb-4 group-hover:text-red-700 transition-colors">
+                      Chauffage
+                    </h3>
+                    
+                    <p className="text-gray-600 mb-6 leading-relaxed flex-grow">
+                      Pompes à chaleur et planchers chauffants pour un <strong>chauffage écologique</strong> 
+                      et économique toute l&apos;année.
+                    </p>
+                    
+                    {/* Features */}
+                    <div className="space-y-2 mb-6">
+                      <div className="flex items-center text-sm text-gray-600">
+                        <div className="w-2 h-2 bg-red-500 rounded-full mr-3"></div>
+                        Pompe à chaleur Air/Eau
+                      </div>
+                      <div className="flex items-center text-sm text-gray-600">
+                        <div className="w-2 h-2 bg-red-500 rounded-full mr-3"></div>
+                        Plancher chauffant
+                      </div>
+                      <div className="flex items-center text-sm text-gray-600">
+                        <div className="w-2 h-2 bg-red-500 rounded-full mr-3"></div>
+                        Économies jusqu&apos;à 70%
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center justify-between">
+                      <span className="text-red-600 font-semibold text-sm"></span>
+                      <div className="flex items-center text-red-600 font-semibold group-hover:translate-x-1 transition-transform duration-200">
+                        <span className="text-sm mr-1">Découvrir</span>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
                 </div>
             </Link>
 
-
-            <Link href="/services/eau-chaude-sanitaire" passHref>
-                <div className="bg-white p-6 rounded-lg shadow-md border border-green-200 hover:shadow-lg transition-shadow">
-                <h3 className="text-xl font-semibold mb-3 text-green-700">Eau Chaude Sanitaire</h3>
-                <p className="text-gray-600 mb-4">Découvrez nos solutions pour l’<strong>eau chaude sanitaire</strong>, comme les chauffe-eau thermodynamiques qui utilisent l’énergie de l’air pour chauffer votre eau. Économiques et écologiques, ces systèmes réduisent vos factures tout en garantissant un approvisionnement constant en eau chaude pour votre foyer.</p>
-                    <Button variant="outline" size="sm" className="border-green-600 text-green-600 hover:bg-green-50">En savoir plus</Button>
+              {/* Eau Chaude Sanitaire Card */}
+              <Link href="/services/eau-chaude-sanitaire" className="group block h-full w-full">
+                <div className="relative bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-blue-200 transform hover:scale-105 h-[480px]">
+                  {/* Gradient Background */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-cyan-50 to-teal-50 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
+                  
+                  {/* Icon Container */}
+                  <div className="relative p-8 pb-6 h-full flex flex-col">
+                    <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                      <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-.243.972A6 6 0 0113.803 8l-.43.158a6 6 0 01-3.746 0l-.43-.158A6 6 0 018 4.972L7.757 4z" />
+                      </svg>
+                    </div>
+                    
+                    <h3 className="text-2xl font-bold text-gray-800 mb-4 group-hover:text-blue-700 transition-colors">
+                      Eau Chaude Sanitaire
+                    </h3>
+                    
+                    <p className="text-gray-600 mb-6 leading-relaxed flex-grow">
+                      Ballons thermodynamiques et cumulus électriques pour une <strong>eau chaude</strong> 
+                      disponible 24h/24 et économique.
+                    </p>
+                    
+                    {/* Features */}
+                    <div className="space-y-2 mb-6">
+                      <div className="flex items-center text-sm text-gray-600">
+                        <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+                        Ballon thermodynamique
+                      </div>
+                      <div className="flex items-center text-sm text-gray-600">
+                        <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+                        Cumulus électrique
+                      </div>
+                      <div className="flex items-center text-sm text-gray-600">
+                        <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+                        Aides financières
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center justify-between">
+                      <span className="text-blue-600 font-semibold text-sm"></span>
+                      <div className="flex items-center text-blue-600 font-semibold group-hover:translate-x-1 transition-transform duration-200">
+                        <span className="text-sm mr-1">Découvrir</span>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
                 </div>
             </Link>
 
-            <Link href="/services/entretien-et-reparation" passHref>
-                <div className="bg-white p-6 rounded-lg shadow-md border border-green-200 hover:shadow-lg transition-shadow">
-                <h3 className="text-xl font-semibold mb-3 text-green-700">Entretien et Réparation</h3>
-                <p className="text-gray-600 mb-4">Assurez la longévité de vos équipements avec nos services d’<strong>entretien</strong> et de <strong>réparation</strong>. Un contrôle régulier de votre <strong>climatisation</strong> ou de votre <strong>pompe à chaleur</strong> permet d’éviter les pannes et de maintenir une performance optimale. En cas de problème, nos techniciens interviennent rapidement pour des réparations efficaces.</p>
-                    <Button variant="outline" size="sm" className="border-green-600 text-green-600 hover:bg-green-50">En savoir plus</Button>
+              {/* Entretien et Réparation Card */}
+              <Link href="/services/entretien-et-reparation" className="group block h-full w-full">
+                <div className="relative bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-purple-200 transform hover:scale-105 h-[480px]">
+                  {/* Gradient Background */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-50 via-violet-50 to-indigo-50 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
+                  
+                  {/* Icon Container */}
+                  <div className="relative p-8 pb-6 h-full flex flex-col">
+                    <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-violet-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                      <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                    </div>
+                    
+                    <h3 className="text-2xl font-bold text-gray-800 mb-4 group-hover:text-purple-700 transition-colors">
+                      Entretien & Réparation
+                    </h3>
+                    
+                    <p className="text-gray-600 mb-6 leading-relaxed flex-grow">
+                      Maintenance experte et <strong>garantie décennale</strong>. 
+                      Engagement sur 10 ans pour la tranquillité de vos équipements.
+                    </p>
+                    
+                    {/* Features */}
+                    <div className="space-y-2 mb-6">
+                      <div className="flex items-center text-sm text-gray-600">
+                        <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
+                        Garantie décennale
+                      </div>
+                      <div className="flex items-center text-sm text-gray-600">
+                        <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
+                        Contrats d&apos;entretien
+                      </div>
+                      <div className="flex items-center text-sm text-gray-600">
+                        <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
+                        Intervention 24h/24
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center justify-between">
+                      <span className="text-purple-600 font-semibold text-sm"></span>
+                      <div className="flex items-center text-purple-600 font-semibold group-hover:translate-x-1 transition-transform duration-200">
+                        <span className="text-sm mr-1">Découvrir</span>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
                 </div>
             </Link>
-
+            </div>
           </div>
         </section>
 
-        {/* Pourquoi choisir ClimGo - Contenu SEO */}
-        <section className="mb-16 text-center bg-gradient-to-r from-blue-50 to-green-50 py-12 rounded-xl border border-blue-200">
-          <h2 className="text-3xl font-bold mb-6 text-gray-800">Pourquoi choisir <strong>ClimGo</strong> pour vos projets ?</h2>
-          <p className="text-lg text-gray-600 max-w-4xl mx-auto mb-6">Avec plus de 10 ans d’expérience dans le domaine des <strong>solutions énergétiques</strong>, ClimGo s’engage à fournir des services de qualité supérieure à ses clients. Nos équipes sont formées aux dernières technologies pour vous offrir des installations de <strong>climatisation</strong>, de <strong>pompes à chaleur</strong> et de systèmes d’<strong>eau chaude sanitaire</strong> à la pointe de l’innovation. Nous mettons un point d’honneur à respecter les délais et à proposer des tarifs compétitifs, tout en vous guidant dans les démarches pour obtenir des <strong>subventions</strong> et des <strong>aides financières</strong>.</p>
-          <p className="text-lg text-gray-600 max-w-4xl mx-auto mb-6">Que vous soyez un particulier ou un professionnel, nous personnalisons nos prestations pour répondre à vos attentes. Notre service client est à votre écoute pour toute question concernant l’<strong>installation</strong>, l’<strong>entretien</strong> ou la <strong>réparation</strong> de vos équipements. En choisissant ClimGo, vous optez pour un partenaire de confiance qui place votre <strong>confort</strong> et votre <strong>satisfaction</strong> au cœur de ses priorités. Faites le choix d’une entreprise locale qui valorise les <strong>énergies renouvelables</strong> et contribue à un avenir plus durable.</p>
-          <Link href="/contact" passHref>
-            <Button variant="default" size="lg" className="bg-gradient-to-r from-blue-600 to-green-600 text-white hover:from-blue-700 hover:to-green-700">Nous contacter</Button>
-          </Link>
+        {/* Avantages Section */}
+        <section className="py-16 bg-gradient-to-r from-slate-900 via-gray-900 to-blue-900 text-white relative overflow-hidden">
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMCAyMGg4MHYyMEgwem0yMCAwaDIwdjIwSDIwem0yMCAyMGgyMHYyMEg0MHoiLz48L2c+PC9nPjwvc3ZnPg==')] bg-repeat" />
+          </div>
+          
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold mb-6">Pourquoi choisir <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-green-400">ClimGo</span> ?</h2>
+              <p className="text-xl opacity-90 max-w-3xl mx-auto">
+                Plus de 10 ans d&apos;expertise au service de votre confort et de vos économies d&apos;énergie
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold mb-3">Garantie Décennale</h3>
+                <p className="opacity-90">Protection totale de vos installations pendant 10 ans</p>
+              </div>
+              
+              <div className="text-center">
+                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold mb-3">Aides Financières</h3>
+                <p className="opacity-90">Accompagnement pour MaPrimeRénov&apos; et autres subventions</p>
+              </div>
+              
+              <div className="text-center">
+                <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold mb-3">Intervention Rapide</h3>
+                <p className="opacity-90">Service d&apos;urgence 24h/24 et 7j/7 pour vos pannes</p>
+              </div>
+            </div>
+          </div>
         </section>
 
-        {/* Call to Action - Transition de couleur */}
-        <section className="text-center bg-gradient-to-r from-blue-600 to-green-600 text-white py-16 rounded-xl mb-16">
-          <h2 className="text-3xl font-bold mb-6">Transformez votre maison avec nos <strong>solutions énergétiques</strong></h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">Réduisez vos factures et votre impact environnemental. Demandez dès maintenant votre <strong>devis gratuit</strong> avec ClimGo.</p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
+      
+
+        {/* Call to Action Final */}
+        <section className="py-20 bg-gradient-to-r from-blue-600 via-purple-600 to-green-600 text-white relative overflow-hidden">
+          <div className="absolute inset-0">
+            <div className="absolute inset-0 bg-black/20" />
+            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48Y2lyY2xlIGN4PSI0MCIgY3k9IjQwIiByPSI0MCIvPjwvZz48L2c+PC9zdmc+')] bg-repeat opacity-20" />
+          </div>
+          
+          <div className="container mx-auto px-4 text-center relative z-10">
+            <h2 className="text-4xl md:text-6xl font-bold mb-6">
+              Transformez votre <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-white">Confort</span>
+            </h2>
+            <p className="text-xl md:text-2xl mb-12 max-w-3xl mx-auto opacity-90">
+              Réduisez vos factures de <strong>70%</strong> et votre impact environnemental. 
+              Demandez votre devis personnalisé en 2 minutes.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-6 justify-center max-w-2xl mx-auto">
             <Link href="/devis" passHref>
-              <Button variant="secondary" size="lg" className="bg-white text-blue-700 hover:bg-gray-100 cursor-pointer">
-                Demander un devis
+                <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100 font-bold px-10 py-5 rounded-2xl shadow-2xl transform hover:scale-105 transition-all duration-200 text-lg">
+                  <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  Devis Gratuit Express
               </Button>
             </Link>
+              
             <Link href="/contact" passHref>
-              <Button variant="outline" size="lg" className="bg-gradient-to-r from-green-600 to-blue-600 border-white text-white hover:bg-blue-500 cursor-pointer">
-                Nous appeler
+                <Button variant="outline" size="lg" className="border-2 bg-white/10 backdrop-blur-sm border-white text-white hover:bg-white hover:text-blue-600 font-bold px-10 py-5 rounded-2xl transition-all duration-200 text-lg">
+                  <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  </svg>
+                  05 56 XX XX XX
               </Button>
             </Link>
+            </div>
+            
+            <div className="mt-12 flex items-center justify-center space-x-8 text-sm opacity-75">
+              <div className="flex items-center">
+                <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                Devis gratuit
+              </div>
+              <div className="flex items-center">
+                <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                Sans engagement
+              </div>
+              <div className="flex items-center">
+                <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                Réponse 24h
+              </div>
+            </div>
           </div>
         </section>
       </main>
+      
       <Footer />
     </div>
   );

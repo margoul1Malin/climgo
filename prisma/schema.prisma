@@ -64,3 +64,17 @@ model SeoMetadata {
   updatedAt   DateTime @updatedAt
   createdAt   DateTime @default(now())
 }
+
+model PageTag {
+  id        String   @id @default(cuid()) @map("_id")
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ContactInfos {
+  id        String   @id @default(cuid()) @map("_id")
+  adress    String?
+  phone     String?
+  mail      String?
+}

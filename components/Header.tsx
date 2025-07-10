@@ -17,17 +17,17 @@ export default function Header() {
         <div className="text-2xl font-bold text-blue-600">ClimGo</div>
         <nav className="hidden md:flex space-x-8 items-center">
           <Link href="/" className="text-gray-700 hover:text-blue-600 transition-colors cursor-pointer">Accueil</Link>
+
+          <div className="flex">
+          <Link href="/services" className="text-gray-700 hover:text-blue-600 transition-colors cursor-pointer">Services</Link>
           <DropdownMenu>
             <DropdownMenuTrigger className="flex items-center text-gray-700 hover:text-blue-600 transition-colors cursor-pointer">
-              Services
+              
               <ChevronDown className="ml-1 h-4 w-4" />
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem>
-                <Link href="/services" className="w-full">Tous les services</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link href="/services/pompes-a-chaleur" className="w-full">Pompes à Chaleur</Link>
+                <Link href="/services/chauffage" className="w-full">Chauffage</Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Link href="/services/climatisation" className="w-full">Climatisation</Link>
@@ -43,6 +43,7 @@ export default function Header() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          </div>
           <Link href="/a-propos" className="text-gray-700 hover:text-blue-600 transition-colors cursor-pointer">À propos</Link>
           <Link href="/contact" className="text-gray-700 hover:text-blue-600 transition-colors cursor-pointer">Contact</Link>
           <Link href="/blog" className="text-gray-700 hover:text-blue-600 transition-colors cursor-pointer">Blog</Link>
@@ -54,7 +55,7 @@ export default function Header() {
           <Link href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
           </Link>
-          <Link href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 transition-colors">
+          <Link href="https://www.instagram.com/climgo_climatisation_chauffage" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
           </Link>
           <Link href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 transition-colors">

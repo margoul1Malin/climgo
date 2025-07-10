@@ -2,102 +2,104 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/button';
+import { useSession } from 'next-auth/react';
+import Link from "next/link";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import prismadb from '@/lib/prismadb';
 
-export default function ContactQueriesPage() {
+export default function ContactPage() {
   const router = useRouter();
-  const [contactQueries, setContactQueries] = useState<any[]>([]);
+  const { data: session, status } = useSession();
+  const [contacts, setContacts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    const fetchContactQueries = async () => {
-      try {
-        const response = await fetch('/api/contact');
-        if (response.ok) {
-          const data = await response.json();
-          setContactQueries(data);
-        } else {
-          setError('Erreur lors de la récupération des demandes de contact.');
-        }
-      } catch (error) {
-        console.error('Erreur lors de la récupération des demandes de contact:', error);
-        setError('Une erreur s\'est produite lors de la récupération des données.');
-      } finally {
-        setLoading(false);
+    if (status === 'unauthenticated') {
+      router.push('/admin');
+    } else if (status === 'authenticated') {
+      fetchContacts();
+    }
+  }, [status, router]);
+
+  const fetchContacts = async () => {
+    try {
+      setLoading(true);
+      setError('');
+      const res = await fetch('/api/contact');
+      if (res.ok) {
+        const data = await res.json();
+        setContacts(data);
+      } else {
+        setError('Erreur lors de la récupération des contacts : Route API non trouvée ou erreur serveur');
       }
-    };
-
-    fetchContactQueries();
-  }, []);
-
-  const handleViewDetails = (id: string) => {
-    router.push(`/admin/contact/${id}`);
+    } catch (err) {
+      setError('Erreur lors de la récupération des contacts : ' + (err instanceof Error ? err.message : 'Erreur inconnue'));
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  if (loading) {
+  if (status === 'loading') {
     return (
-      <div className="flex flex-col min-h-screen bg-gray-50 text-gray-900">
+      <div className="flex flex-col min-h-screen bg-gray-50">
         <Header />
-        <main className="flex-grow container mx-auto px-4 py-12 bg-gray-50">
-          <div className="flex justify-center items-center h-64">
-            <p className="text-xl text-gray-600">Chargement des demandes de contact...</p>
-          </div>
+        <main className="flex-grow container mx-auto px-4 py-12 flex items-center justify-center">
+          <p className="text-gray-600">Chargement...</p>
         </main>
         <Footer />
       </div>
     );
   }
 
-  if (error) {
-    return (
-      <div className="flex flex-col min-h-screen bg-gray-50 text-gray-900">
-        <Header />
-        <main className="flex-grow container mx-auto px-4 py-12 bg-gray-50">
-          <div className="flex justify-center items-center h-64">
-            <p className="text-xl text-red-600">{error}</p>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    );
+  if (!session) {
+    return null; // Redirection gérée par useEffect
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50 text-gray-900">
+    <div className="flex flex-col min-h-screen bg-gray-50">
       <Header />
-      <main className="flex-grow container mx-auto px-4 py-12 bg-gray-50">
-        <h1 className="text-4xl font-extrabold mb-8 text-center">Gestion des Demandes de Contact</h1>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {contactQueries.length === 0 ? (
-            <div className="col-span-full text-center p-8 bg-white rounded-2xl shadow-md border border-gray-200">
-              <p className="text-gray-600 text-lg">Aucune demande de contact trouvée.</p>
+      <main className="flex-grow container mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold text-gray-800 mb-6">Gestion des Contacts</h1>
+        {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+        {loading ? (
+          <p className="text-gray-600">Chargement des contacts...</p>
+        ) : (
+          <div className="bg-white rounded-lg shadow-lg p-6 mb-8 border border-gray-100">
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden">
+                <thead className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nom</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Email</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Téléphone</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {contacts.length === 0 ? (
+                    <tr>
+                      <td colSpan={4} className="px-6 py-4 text-center text-gray-500">Aucun contact trouvé.</td>
+                    </tr>
+                  ) : (
+                    contacts.map((contact) => (
+                      <tr key={contact.id} className="hover:bg-gray-50 transition duration-200">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{contact.name || contact.nom || 'Nom non disponible'}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{contact.email || 'Email non disponible'}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{contact.phone || contact.telephone || 'Téléphone non disponible'}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                          <Link href={`/admin/contact/${contact.id}`} className="text-indigo-600 hover:text-indigo-900 transition duration-200">Voir Détails</Link>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
             </div>
-          ) : (
-            contactQueries.map((query) => (
-              <div key={query.id} className="bg-white rounded-2xl shadow-md p-6 border border-gray-200 backdrop-blur-sm transform transition-all duration-300 hover:shadow-xl hover:scale-105 hover:border-indigo-300">
-                <h2 className="text-xl font-semibold mb-2 text-indigo-700">{query.nom}</h2>
-                <p className="text-gray-600 mb-1"><span className="font-medium">Email:</span> {query.email}</p>
-                <p className="text-gray-600 mb-1"><span className="font-medium">Sujet:</span> {query.sujet}</p>
-                <p className="text-gray-600 mb-4 line-clamp-2"><span className="font-medium">Message:</span> {query.message}</p>
-                <div className="flex justify-between items-center">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleViewDetails(query.id)}
-                    className="text-indigo-700 border-indigo-700 hover:bg-indigo-700 hover:text-white transition-all duration-300 rounded-full px-6 py-1 shadow-md hover:shadow-lg"
-                  >
-                    Voir Détails
-                  </Button>
-                </div>
-              </div>
-            ))
-          )}
-        </div>
+          </div>
+        )}
+        <button onClick={() => router.push('/admin')} className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:scale-105">Retour au panneau d&apos;administration</button>
       </main>
       <Footer />
     </div>

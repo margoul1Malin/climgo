@@ -5,6 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import prismadb from '@/lib/prismadb';
 import ShareLinks from '@/components/ShareLinks';
+import Image from 'next/image';
 
 // Fonction pour générer les paramètres statiques
 export async function generateStaticParams() {
@@ -34,7 +35,7 @@ export default async function BlogPost({ params }: { params: { slug: string } })
         <main className="flex-grow container mx-auto px-4 py-16 flex flex-col items-center justify-center">
           <h1 className="text-4xl md:text-5xl font-extrabold mb-6 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent animate-pulse">Article Introuvable</h1>
           <div className="bg-gray-700 bg-opacity-50 border border-gray-600 rounded-2xl shadow-2xl p-8 text-center max-w-md w-full backdrop-blur-sm">
-            <p className="text-gray-300 text-lg mb-6">L\'article avec ce slug n\'existe pas.</p>
+            <p className="text-gray-300 text-lg mb-6">L&apos;article avec ce slug n&apos;existe pas.</p>
             <Link href="/blog" passHref>
               <Button variant="outline" size="lg" className="text-white border-blue-500 bg-transparent hover:bg-blue-500 hover:text-white transition-all duration-300 rounded-full px-8 py-2 shadow-lg hover:shadow-xl">
                 Retour au Blog
@@ -54,7 +55,9 @@ export default async function BlogPost({ params }: { params: { slug: string } })
         <div className="relative mb-12">
           {article.image ? (
             <div className="relative w-full h-80 md:h-96 overflow-hidden rounded-2xl shadow-2xl group">
-              <img 
+              <Image 
+                width={1000}
+                height={1000}
                 src={article.image} 
                 alt={article.title} 
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 

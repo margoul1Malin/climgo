@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -17,6 +17,17 @@ export default function Contact() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [contactInfos, setContactInfos] = useState({ adress: '', phone: '', mail: '' });
+
+  useEffect(() => {
+    fetch('/api/contact-infos')
+      .then(res => res.json())
+      .then(data => setContactInfos({
+        adress: data.adress || '',
+        phone: data.phone || '',
+        mail: data.mail || ''
+      }));
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -91,66 +102,66 @@ export default function Contact() {
                     <p>{error}</p>
                   </div>
                 )}
-                <div className="grid grid-cols-1 gap-6">
-                  <div>
-                    <Label htmlFor="nom" className="block mb-2 text-gray-700">Votre nom</Label>
-                    <Input
-                      id="nom"
-                      type="text"
+              <div className="grid grid-cols-1 gap-6">
+                <div>
+                  <Label htmlFor="nom" className="block mb-2 text-gray-700">Votre nom</Label>
+                  <Input
+                    id="nom"
+                    type="text"
                       value={nom}
                       onChange={(e) => setNom(e.target.value)}
                       required
-                      placeholder="Votre nom complet"
+                    placeholder="Votre nom complet"
                       className={`w-full border ${nom ? 'border-green-500 focus:ring-green-500' : 'border-gray-300'} focus:ring-2 focus:outline-none rounded-lg`}
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="email" className="block mb-2 text-gray-700">Votre email</Label>
-                    <Input
-                      id="email"
-                      type="email"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="email" className="block mb-2 text-gray-700">Votre email</Label>
+                  <Input
+                    id="email"
+                    type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      placeholder="exemple@domaine.com"
+                    placeholder="exemple@domaine.com"
                       className={`w-full border ${email ? /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email) ? 'border-green-500 focus:ring-green-500' : 'border-red-500 focus:ring-red-500' : 'border-gray-300'} focus:ring-2 focus:outline-none rounded-lg`}
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="sujet" className="block mb-2 text-gray-700">Sujet</Label>
-                    <Input
-                      id="sujet"
-                      type="text"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="sujet" className="block mb-2 text-gray-700">Sujet</Label>
+                  <Input
+                    id="sujet"
+                    type="text"
                       value={sujet}
                       onChange={(e) => setSujet(e.target.value)}
                       required
-                      placeholder="Objet de votre message"
+                    placeholder="Objet de votre message"
                       className={`w-full border ${sujet ? 'border-green-500 focus:ring-green-500' : 'border-gray-300'} focus:ring-2 focus:outline-none rounded-lg`}
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="message" className="block mb-2 text-gray-700">Votre message</Label>
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="message" className="block mb-2 text-gray-700">Votre message</Label>
                     <Textarea
-                      id="message"
+                    id="message"
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
                       required
-                      placeholder="Décrivez votre demande ou question..."
+                    placeholder="Décrivez votre demande ou question..."
                       className={`w-full border ${message ? 'border-green-500 focus:ring-green-500' : 'border-gray-300'} focus:ring-2 focus:outline-none rounded-lg min-h-[150px]`}
-                    />
-                  </div>
+                  />
                 </div>
-                <div className="text-center">
+              </div>
+              <div className="text-center">
                   <Button
                     type="submit"
                     disabled={loading}
                     className="bg-teal-600 text-white hover:bg-teal-700 w-full md:w-auto px-6 py-2 transition-all duration-300"
                   >
                     {loading ? 'Envoi en cours...' : 'Envoyer mon message'}
-                  </Button>
-                  <p className="text-sm text-gray-500 mt-2">En soumettant ce formulaire, vous acceptez que ClimGo traite vos données pour répondre à votre demande.</p>
-                </div>
-              </form>
+                </Button>
+                <p className="text-sm text-gray-500 mt-2">En soumettant ce formulaire, vous acceptez que ClimGo traite vos données pour répondre à votre demande.</p>
+              </div>
+            </form>
             )}
           </div>
           {/* Informations de contact - Colonne de droite (2/5) avec style visuel innovant */}
@@ -167,7 +178,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg text-gray-800">Adresse</h3>
-                  <p>ClimGo S.A.S<br />123 Rue de l&apos;Énergie<br />75001 Paris, France</p>
+                  <p>{contactInfos.adress || '—'}</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -178,7 +189,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg text-gray-800">Téléphone</h3>
-                  <p>01 23 45 67 89<br />Du lundi au vendredi, 9h-18h</p>
+                  <p>{contactInfos.phone || '—'}</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -190,7 +201,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg text-gray-800">Email</h3>
-                  <p>contact@climgo.fr</p>
+                  <p>{contactInfos.mail || '—'}</p>
                 </div>
               </div>
             </div>

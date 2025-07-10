@@ -57,7 +57,7 @@ const handler = NextAuth({
     maxAge: 30 * 24 * 60 * 60, // 30 jours
   },
   pages: {
-    signIn: '/admin',
+    signIn: '/auth/signin',
   },
   callbacks: {
     async jwt({ token, user }) {
@@ -68,8 +68,7 @@ const handler = NextAuth({
     },
     async session({ session, token }) {
       if (token && session.user) {
-        // Ajouter l'id au session.user de manière compatible avec les types
-        session.user.id = token.id as string;
+        (session.user as any).id = token.id as string;
       }
       return session;
     }

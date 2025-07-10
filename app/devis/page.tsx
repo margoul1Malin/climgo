@@ -14,7 +14,6 @@ import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import type { Metadata } from 'next';
 
 
 
@@ -89,7 +88,7 @@ export default function Devis() {
             )}
             {submitStatus === 'error' && (
               <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                Une erreur s'est produite lors de l'envoi de votre demande. Veuillez réessayer.
+                Une erreur s&apos;est produite lors de l&apos;envoi de votre demande. Veuillez réessayer.
               </div>
             )}
             <form className="space-y-6" onSubmit={handleSubmit}>

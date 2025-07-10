@@ -2,13 +2,7 @@ import { Button } from '@/components/ui/button';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
-import type { Metadata } from 'next';
 
-export const metadata: Metadata = {
-  title: 'ClimGo - À propos',
-  description: 'Découvrez l’histoire de ClimGo S.A.S, une entreprise passionnée par le confort et les solutions énergétiques innovantes.',
-  keywords: 'à propos climatisation, à propos climatisation Arcachon, à propos climatisation Arcachon, climatisation Arcachon',
-};
 
 export default function APropos() {
   return (
@@ -85,7 +79,7 @@ export default function APropos() {
               </Button>
             </Link>
             <Link href="/contact" passHref>
-              <Button variant="outline" size="lg" className="border-white text-white hover:bg-blue-500 cursor-pointer">
+              <Button variant="outline" size="lg" className="border-white bg-transparent text-white hover:bg-blue-500 cursor-pointer">
                 Nous appeler
               </Button>
             </Link>

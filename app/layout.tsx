@@ -1,16 +1,20 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { SessionProvider } from 'next-auth/react';
 import SessionLayout from '@/components/SessionLayout';
+import { getSeoMetadata } from '@/lib/getSeoMetadata';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const metadata: Metadata = {
-  title: 'ClimGo - Expert en Climatisation et Pompes à Chaleur',
-  description: 'ClimGo offre des solutions de climatisation et de pompes à chaleur pour un confort optimal. Demandez un devis dès aujourd’hui !',
-  keywords: 'climatisation, pompes à chaleur, installation climatisation Arcachon, entretien pompes à chaleur, solutions de chauffage',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getSeoMetadata('accueil');
+  return {
+    title: seo?.title || 'ClimGO',
+    description: seo?.description || '',
+    keywords: seo?.keywords || '',
+  };
+}
+
 
 export default function RootLayout({
   children,
@@ -20,6 +24,7 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <head>
+        <link rel="icon" href="/favicon.ico" sizes="32x32" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "LocalBusiness",
@@ -126,3 +131,17 @@ export default function RootLayout({
     </html>
   );
 }
+
+/* async function getSeoMetadata(pageName: string) {
+  const seoMetadata = await prismadb.seoMetadata.findUnique({
+    where: { pageName },
+  });
+  return seoMetadata;
+}
+
+// Définir les métadonnées
+export const metadata: Metadata = {
+  title: 'ClimGO - Solutions de Climatisation et Pompes à Chaleur',
+  description: 'ClimGO offre des solutions de climatisation et de pompes à chaleur pour un confort optimal toute l\'année. Découvrez nos services d\'installation, d\'entretien et de réparation.',
+  keywords: 'climatisation, pompes à chaleur, installation, entretien, réparation, ClimGO',
+}; */

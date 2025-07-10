@@ -13,6 +13,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
         where: { id: identifier }
       });
     } catch (e) {
+      console.log(e);
       // Si ce n'est pas un ID, essayer comme slug
       article = await prismadb.article.findUnique({
         where: { slug: identifier }

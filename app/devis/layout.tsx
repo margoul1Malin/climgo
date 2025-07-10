@@ -1,10 +1,16 @@
+import { getSeoMetadata } from '@/lib/getSeoMetadata';
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = {
-    title: 'ClimGo - Devis Gratuit',
-    description: 'Obtenez un devis gratuit pour vos projets de climatisation, pompes à chaleur ou eau chaude sanitaire. Installation, entretien et devis gratuit partout en France.',
-    keywords: 'devis climatisation, devis pompes à chaleur, devis eau chaude sanitaire, devis gratuit climatisation, devis gratuit pompes à chaleur, devis gratuit eau chaude sanitaire, climatisation Arcachon',
+// Fonction pour récupérer les métadonnées SEO via une API
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getSeoMetadata('devis');
+  return {
+    title: seo?.title || 'ClimGO',
+    description: seo?.description || '',
+    keywords: seo?.keywords || '',
   };
+}
+
 
 export default function DevisLayout({
   children,

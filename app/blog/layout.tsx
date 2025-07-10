@@ -1,10 +1,16 @@
+import { getSeoMetadata } from '@/lib/getSeoMetadata';
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = {
-  title: 'ClimGo - Blog sur la Climatisation et les Pompes à Chaleur',
-  description: 'Découvrez nos articles sur la climatisation et les pompes à chaleur. Conseils, astuces et informations pour optimiser votre confort thermique.',
-  keywords: 'blog climatisation, conseils pompes à chaleur, astuces chauffage, ClimGo blog',
-};
+// Fonction pour récupérer les métadonnées SEO via une API
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getSeoMetadata('blog');
+  return {
+    title: seo?.title || 'ClimGO',
+    description: seo?.description || '',
+    keywords: seo?.keywords || '',
+  };
+}
+
 
 export default function BlogLayout({
   children,

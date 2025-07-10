@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
@@ -172,7 +171,7 @@ export default function Articles() {
             Créer un nouvel article
           </Button>
           <Button onClick={() => router.push('/admin')} variant="outline" className="mb-6 ml-4 text-blue-600 border-blue-600 hover:bg-blue-50">
-            Retour au panneau d\'administration
+            Retour au panneau d&apos;administration
           </Button>
 
           {(isCreating || isEditing) && (
@@ -189,7 +188,7 @@ export default function Articles() {
                     <Textarea id="content" value={content} onChange={(e) => setContent(e.target.value)} required className="min-h-[100px]" />
                   </div>
                   <div>
-                    <Label htmlFor="imageUrl">URL de l\'image (optionnel)</Label>
+                    <Label htmlFor="imageUrl">URL de l&apos;image (optionnel)</Label>
                     <Input id="imageUrl" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
                   </div>
                   <div>

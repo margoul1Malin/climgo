@@ -25,4 +25,21 @@ export async function POST(req: Request) {
     console.error('Erreur lors de la création du devis:', error);
     return NextResponse.json({ error: 'Erreur serveur lors de la création du devis' }, { status: 500 });
   }
+}
+
+export async function GET() {
+  try {
+    const devis = await prismadb.devis.findMany({
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
+    return NextResponse.json(devis);
+  } catch (error) {
+    console.error('Erreur lors de la récupération des devis:', error);
+    return NextResponse.json(
+      { error: 'Erreur lors de la récupération des devis' },
+      { status: 500 }
+    );
+  }
 } 
