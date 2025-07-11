@@ -33,10 +33,6 @@ export default function Services() {
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-green-600">
                   Nos Services
                 </span>
-                <br />
-                <span className="text-gray-800">
-                  Climatiques Premium
-                </span>
               </h1>
               
               {/* Subtitle */}
@@ -60,7 +56,7 @@ export default function Services() {
                     <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                     </svg>
-                    Conseil Expert
+                    Contact Pro
               </Button>
             </Link>
               </div>
@@ -345,63 +341,7 @@ export default function Services() {
       
 
         {/* Call to Action Final */}
-        <section className="py-20 bg-gradient-to-r from-blue-600 via-purple-600 to-green-600 text-white relative overflow-hidden">
-          <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-black/20" />
-            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48Y2lyY2xlIGN4PSI0MCIgY3k9IjQwIiByPSI0MCIvPjwvZz48L2c+PC9zdmc+')] bg-repeat opacity-20" />
-          </div>
-          
-          <div className="container mx-auto px-4 text-center relative z-10">
-            <h2 className="text-4xl md:text-6xl font-bold mb-6">
-              Transformez votre <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-white">Confort</span>
-            </h2>
-            <p className="text-xl md:text-2xl mb-12 max-w-3xl mx-auto opacity-90">
-              Réduisez vos factures de <strong>70%</strong> et votre impact environnemental. 
-              Demandez votre devis personnalisé en 2 minutes.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-6 justify-center max-w-2xl mx-auto">
-            <Link href="/devis" passHref>
-                <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100 font-bold px-10 py-5 rounded-2xl shadow-2xl transform hover:scale-105 transition-all duration-200 text-lg">
-                  <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  Devis Gratuit Express
-              </Button>
-            </Link>
-              
-            <Link href="/contact" passHref>
-                <Button variant="outline" size="lg" className="border-2 bg-white/10 backdrop-blur-sm border-white text-white hover:bg-white hover:text-blue-600 font-bold px-10 py-5 rounded-2xl transition-all duration-200 text-lg">
-                  <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
-                  05 56 XX XX XX
-              </Button>
-            </Link>
-            </div>
-            
-            <div className="mt-12 flex items-center justify-center space-x-8 text-sm opacity-75">
-              <div className="flex items-center">
-                <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                Devis gratuit
-              </div>
-              <div className="flex items-center">
-                <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                Sans engagement
-              </div>
-              <div className="flex items-center">
-                <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                Réponse 24h
-              </div>
-            </div>
-          </div>
-        </section>
+       
       </main>
       
       <Footer />

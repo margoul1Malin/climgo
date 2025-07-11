@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import Link from 'next/link';
 
 export default function Contact() {
   const [nom, setNom] = useState('');
@@ -76,13 +75,24 @@ export default function Contact() {
   return (
     <div className="flex flex-col min-h-screen bg-white text-gray-900">
       <Header />
-      <main className="container mx-auto px-4 py-12 mb-12 flex-grow">
+      <main className="container mx-auto px-4 py-12 mb-12 flex-grow my-24">
         {/* Section d'introduction - Contenu SEO avec mise en page unique */}
         <section className="mb-16 text-center">
-          <h2 className="text-3xl font-bold mb-6 text-gray-800">Une question sur nos <strong>solutions thermiques</strong> ? Contactez-nous !</h2>
+          <h1 className="text-3xl font-bold mb-6 text-gray-800"><strong>Parlons de votre projet</strong>, Contact ClimGO</h1>
           <div className="max-w-4xl mx-auto text-lg text-gray-600 space-y-6 px-4">
-            <p>Chez ClimGo, votre satisfaction est notre priorité. Que vous ayez une question sur l&apos;installation d&apos;une <strong>pompe à chaleur</strong>, un projet de <strong>climatisation réversible</strong>, ou besoin d&apos;informations sur nos services d&apos;<strong>entretien</strong> et de <strong>réparation</strong>, notre équipe est là pour vous répondre. Basés en France, avec plus de <strong>10 ans d&apos;expérience</strong> dans les <strong>énergies renouvelables</strong>, nous vous offrons un accompagnement personnalisé pour tous vos besoins en <strong>confort thermique</strong>.</p>
-            <p>N&apos;hésitez pas à nous contacter pour un <strong>devis gratuit</strong>, des conseils sur les <strong>aides financières</strong> comme MaPrimeRénov&apos;, ou simplement pour échanger sur votre projet. Remplissez le formulaire ci-dessous ou appelez-nous directement.</p>
+            <p>Vous avez une question, un projet d’installation ou besoin d’un devis ?</p>
+
+<p><strong>Contactez ClimGO</strong> : nous vous accompagnons avec écoute, réactivité et des solutions techniques sur mesure.</p>
+
+<p><strong>Vous souhaitez installer une pompe à chaleur, une climatisation ou un chauffe-eau performant ? Vous avez besoin d’informations sur les aides disponibles pour vos travaux de rénovation énergétique ? Contactez ClimGO, votre spécialiste du confort thermique dans le Sud-Ouest.</strong></p>
+
+<p>Chez ClimGO, nous savons qu’un bon accompagnement commence par une <strong>écoute attentive</strong>. C’est pourquoi notre équipe se tient à votre disposition pour vous apporter un <strong>premier conseil</strong>, un <strong>devis gratuit</strong>, ou tout simplement <strong>répondre à vos questions</strong>.</p>
+
+<p>Que vous soyez un <strong>particulier</strong> ou un <strong>professionnel</strong>, nous vous proposons des solutions sur mesure pour votre logement ou vos locaux. Notre expertise couvre le chauffage, la climatisation, la production d’eau chaude sanitaire, l’entretien de vos équipements, mais aussi toutes <strong>les aides de l’État (MaPrimeRénov’, CEE, TVA réduite…)</strong>.</p>
+
+<p>Un <strong>besoin urgent</strong> ? Une <strong>question technique</strong> ? Un <strong>projet en réflexion</strong> ? Contactez ClimGO via le formulaire ci-dessous ou par téléphone. Vous recevrez une réponse rapide, claire, et personnalisée.</p>
+
+<p><strong>Parce que chaque projet est unique, notre priorité reste la vôtre.</strong></p>
           </div>
         </section>
 
@@ -207,41 +217,12 @@ export default function Contact() {
             </div>
             <div className="mt-8 pt-6 border-t border-teal-200 relative z-10">
               <h3 className="font-semibold text-lg text-gray-800 mb-3">Horaires d&apos;ouverture</h3>
-              <p className="text-gray-700">Lundi - Vendredi : 9h00 - 18h00<br />Samedi : 10h00 - 14h00<br />Dimanche : Fermé</p>
+              <p className="text-gray-700">Lundi - Vendredi : 08:00–19:30<br />Week-end : Fermé</p>
             </div>
           </div>
         </section>
 
-        {/* Section Pourquoi nous contacter - Contenu SEO avec style visuel distinct */}
-        <section className="mb-16 text-center bg-teal-50 py-12 rounded-xl border border-teal-200 relative overflow-hidden">
-          <div className="absolute top-1/2 left-0 w-16 h-16 bg-teal-600 rounded-full opacity-20 -translate-y-1/2"></div>
-          <div className="absolute bottom-1/3 right-0 w-24 h-24 bg-teal-600 rounded-full opacity-20"></div>
-          <h2 className="text-3xl font-bold mb-6 text-gray-800 relative z-10">Pourquoi contacter <strong>ClimGo</strong> ?</h2>
-          <div className="max-w-4xl mx-auto text-lg text-gray-600 space-y-6 px-4 relative z-10">
-            <p>Chez ClimGo, nous croyons en un service client d&apos;excellence. Que vous soyez prêt à lancer un projet d&apos;installation de <strong>climatisation</strong> ou de <strong>pompe à chaleur</strong>, que vous ayez besoin d&apos;un <strong>entretien</strong> pour optimiser vos équipements, ou que vous cherchiez des informations sur les <strong>subventions énergétiques</strong>, notre équipe est là pour vous guider à chaque étape.</p>
-            <p>Avec plus de <strong>10 ans d&apos;expertise</strong> dans les <strong>solutions de confort thermique</strong>, nous avons aidé des milliers de foyers à réduire leurs <strong>factures énergétiques</strong> tout en améliorant leur qualité de vie. Contactez-nous pour découvrir comment nos <strong>technologies écologiques</strong> peuvent transformer votre maison.</p>
-          </div>
-          <Link href="/a-propos" passHref>
-            <Button variant="outline" size="lg" className="border-teal-600 text-teal-600 hover:bg-teal-50 mt-6 relative z-10">
-              En savoir plus sur ClimGo
-            </Button>
-          </Link>
-        </section>
-
-        {/* Call to Action - Style innovant */}
-        <section className="text-center bg-gradient-to-r from-teal-700 to-blue-700 text-white py-16 rounded-xl mb-16 relative overflow-hidden">
-          <div className="absolute top-0 left-1/3 w-32 h-32 bg-white rounded-full opacity-10 -translate-y-16"></div>
-          <div className="absolute bottom-0 right-1/3 w-32 h-32 bg-white rounded-full opacity-10 translate-y-16"></div>
-          <h2 className="text-3xl font-bold mb-6 relative z-10">Prêt à améliorer votre <strong>confort thermique</strong> ?</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto relative z-10">Contactez-nous dès maintenant ou demandez un <strong>devis gratuit</strong> pour votre projet.</p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4 relative z-10">
-            <Link href="/devis" passHref>
-              <Button variant="outline" size="lg" className="bg-white text-teal-600 border-2 border-teal-600 hover:bg-teal-600 hover:text-white cursor-pointer">
-                Demander un devis
-              </Button>
-            </Link>
-          </div>
-        </section>
+        
       </main>
       <Footer />
     </div>

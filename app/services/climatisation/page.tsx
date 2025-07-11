@@ -1,4 +1,5 @@
-import React from 'react';
+'use client';
+import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -6,234 +7,124 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export default function Climatisation() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [, setIsTransitioning] = useState(false);
+  
+  const bgImages = [
+    "/gainable-arca.jpeg",
+    "/climcauderan.jpeg"
+  ];
+
+  // Animation de fond avec crossfade corrigée
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsTransitioning(true);
+      
+      // Attendre que la transition commence, puis changer l'image
+      setTimeout(() => {
+        setCurrentIndex((prev) => (prev + 1) % bgImages.length);
+        setIsTransitioning(false);
+      }, 1000); // Durée de la transition crossfade
+    }, 5000); // 5 secondes par image
+
+    return () => clearInterval(interval);
+  }, [bgImages.length]);
+
   return (
+
     <div className="flex flex-col min-h-screen bg-gray-50">
       <Header />
       
-      <main className="container mx-auto px-4 py-12 mb-12 flex-grow">
+      {/* Main Content */}
+      <main className="mb-12 flex-grow">
         {/* Hero Section */}
-        <section className="relative bg-gradient-to-br from-green-600 to-emerald-700 text-white py-20 mb-16 rounded-2xl overflow-hidden shadow-2xl">
-          <div className="absolute inset-0 opacity-20">
-            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIxMCIvPjwvZz48L2c+PC9zdmc+')] bg-repeat" />
-          </div>
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-                Nos Solutions de <span className="text-green-300">Climatisation</span>
-              </h1>
-              <p className="text-xl md:text-2xl mb-8 opacity-90 leading-relaxed">
-                Découvrez nos systèmes de <strong>climatisation performants</strong> : unités murales, cassettes et consoles pour un confort optimal toute l&apos;année.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/devis" passHref>
-                  <Button variant="secondary" size="lg" className="bg-white text-green-600 hover:bg-gray-100 font-semibold px-8 py-4 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200">
-                    Obtenir un devis gratuit
-                  </Button>
-                </Link>
-                <Link href="/contact" passHref>
-                  <Button variant="outline" size="lg" className="border-2 bg-transparent border-white text-white hover:bg-white hover:text-green-600 font-semibold px-8 py-4 rounded-xl transition-all duration-200">
-                    Nous contacter
-              </Button>
-            </Link>
-              </div>
+        <section className="relative w-full h-screen flex items-center justify-center overflow-hidden">
+          {/* Images de fond avec système de crossfade */}
+          {bgImages.map((image, index) => (
+            <div
+              key={index}
+              className="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out"
+              style={{ 
+                backgroundImage: `url('${image}')`,
+                opacity: currentIndex === index ? 1 : 0,
+                transform: 'scale(1.05)', // Effet Ken Burns léger
+                animation: currentIndex === index ? 'kenBurns 5s ease-in-out infinite alternate' : 'none'
+              }}
+            />
+          ))}
+          
+          {/* Overlay sombre */}
+          <div className="absolute inset-0 bg-black opacity-50 z-10"></div>
+          
+          <div className="relative z-20 text-center text-white px-4 md:px-8 animate-fade-in-up">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4">
+              ClimGO - Climatisation
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl mb-6 sm:mb-8">
+              Installation de climatisation 
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
+              <Link 
+                href="/devis" 
+                className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 sm:py-3 px-5 sm:px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 text-sm sm:text-base"
+              >
+                Demander un Devis
+              </Link>
+              <Link 
+                href="/contact" 
+                className="bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 text-white font-bold py-2.5 sm:py-3 px-5 sm:px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 text-sm sm:text-base"
+              >
+                Nous Contacter
+              </Link>
             </div>
           </div>
-        </section>
-
-        {/* Introduction avec image */}
-        <section className="mb-16">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
-            <div>
-              <h2 className="text-4xl font-bold mb-6 text-gray-800">Solutions de <span className="text-green-600">Climatisation Moderne</span></h2>
-              <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-                Chez ClimGo, nous proposons les meilleures solutions de climatisation pour votre confort. 
-                Nos <strong>climatiseurs muraux</strong>, <strong>cassettes</strong> et <strong>consoles</strong> 
-                vous garantissent un air frais et pur tout en respectant l&apos;environnement.
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="flex items-start">
-                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-4 mt-1">
-                    <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-800 mb-2">Climatisation murale</h3>
-                    <p className="text-gray-600 text-sm">Installation simple et design discret</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-4 mt-1">
-                    <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-800 mb-2">Cassettes & Consoles</h3>
-                    <p className="text-gray-600 text-sm">Solutions professionnelles haute performance</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="relative">
-              <div className="bg-white p-6 rounded-2xl shadow-xl">
-                <Image 
-                  src="/ClimAnime.png" 
-                  alt="Schéma climatisation ClimGo"
-                  width={500}
-                  height={400}
-                  className="w-full h-auto rounded-lg"
-                />
-              </div>
-            </div>
+          
+          <div className="absolute bottom-5 sm:bottom-10 left-1/2 transform -translate-x-1/2 z-20">
+            <svg
+              className="w-8 h-8 sm:w-12 sm:h-12 text-white animate-bounce"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
           </div>
-        </section>
-
-        {/* Nos Solutions */}
-        <section className="mb-16">
-          <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">Nos Solutions de <span className="text-green-600">Climatisation</span></h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          
+          {/* Animation Ken Burns en CSS */}
+          <style jsx>{`
+            @keyframes kenBurns {
+              0% { transform: scale(1.05); }
+              100% { transform: scale(1.15); }
+            }
             
-            {/* Climatisation Murale */}
-            <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-green-100">
-              <div className="flex items-center mb-6">
-                <div className="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mr-4">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-bold text-gray-800">Climatisation Murale</h3>
-              </div>
-              <p className="text-gray-700 mb-6 leading-relaxed">
-                La <strong>climatisation murale</strong> est la solution idéale pour les habitations. 
-                Discrète et efficace, elle s&apos;intègre parfaitement dans votre décoration tout en offrant un confort optimal.
-              </p>
-              <ul className="space-y-3 mb-6">
-                <li className="flex items-center text-gray-700">
-                  <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                  Design moderne et discret
-                </li>
-                <li className="flex items-center text-gray-700">
-                  <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                  Installation rapide et facile
-                </li>
-                <li className="flex items-center text-gray-700">
-                  <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                  Fonction réversible chaud/froid
-                </li>
-              </ul>
-              <div className="relative">
-                <Image 
-                  src="/ClimMurale.png" 
-                  alt="Climatisation murale installation ClimGo"
-                  width={400}
-                  height={250}
-                  className="w-full h-48 object-cover rounded-lg shadow-lg"
-                />
-              </div>
-            </div>
-
-            {/* Cassettes & Consoles */}
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-blue-100">
-              <div className="flex items-center mb-6">
-                <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-4">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-bold text-gray-800">Cassettes & Consoles</h3>
-              </div>
-              <p className="text-gray-700 mb-6 leading-relaxed">
-                Les <strong>cassettes</strong> et <strong>consoles</strong> sont parfaites pour les espaces commerciaux et les grandes surfaces. 
-                Invisibles au plafond ou élégantes au sol, elles offrent une diffusion d&apos;air optimale.
-              </p>
-              <ul className="space-y-3 mb-6">
-                <li className="flex items-center text-gray-700">
-                  <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                  Diffusion d&apos;air 360° (cassettes)
-                </li>
-                <li className="flex items-center text-gray-700">
-                  <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                  Haute performance énergétique
-                </li>
-                <li className="flex items-center text-gray-700">
-                  <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-              </svg>
-                  Idéal pour grandes surfaces
-                </li>
-              </ul>
-              <div className="relative">
-                <Image 
-                  src="/CassetClimAnime.png" 
-                  alt="Cassette climatisation professionnelle"
-                  width={400}
-                  height={250}
-                  className="w-full h-48 object-cover rounded-lg shadow-lg"
-                />
-              </div>
-            </div>
-          </div>
+            @keyframes fade-in-up {
+              from {
+                opacity: 0;
+                transform: translateY(30px);
+              }
+              to {
+                opacity: 1;
+                transform: translateY(0);
+              }
+            }
+            
+            .animate-fade-in-up {
+              animation: fade-in-up 1s ease-out;
+            }
+          `}</style>
         </section>
+        
+        
 
-        {/* Fonctionnement */}
-        <section className="mb-16">
-          <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">Comment fonctionne votre <span className="text-green-600">Climatisation</span> ?</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <div className="bg-white p-8 rounded-xl shadow-lg text-center border-t-4 border-green-500">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-4 text-gray-800">1. Aspiration de l&apos;air</h3>
-              <p className="text-gray-600 leading-relaxed">
-                L&apos;unité intérieure aspire l&apos;air chaud de votre pièce et le fait passer à travers l&apos;évaporateur contenant le fluide frigorigène.
-              </p>
-            </div>
-            <div className="bg-white p-8 rounded-xl shadow-lg text-center border-t-4 border-blue-500">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-4 text-gray-800">2. Refroidissement</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Le fluide frigorigène absorbe la chaleur et s&apos;évapore, puis est comprimé et refroidi dans l&apos;unité extérieure.
-              </p>
-            </div>
-            <div className="bg-white p-8 rounded-xl shadow-lg text-center border-t-4 border-emerald-500">
-              <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg className="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-4 text-gray-800">3. Diffusion d&apos;air frais</h3>
-              <p className="text-gray-600 leading-relaxed">
-                L&apos;air refroidi est diffusé dans votre espace, créant une température agréable et un confort optimal.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Installation avec image */}
-        <section className="mb-16">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+        {/* Introduction avec image - Murale */}
+        <section className="my-8 sm:my-12 px-4 sm:px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center max-w-6xl mx-auto">
             <div className="relative">
-              <div className="bg-white p-6 rounded-2xl shadow-xl">
+              <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-xl">
                 <Image 
-                  src="/climcauderan.jpeg" 
-                  alt="Installation climatisation par ClimGo à Caudéran"
+                  src="/AnimeMurale.webp" 
+                  alt="Schéma pompe à chaleur Air/Eau ClimGo"
                   width={500}
                   height={400}
                   className="w-full h-auto rounded-lg"
@@ -241,104 +132,332 @@ export default function Climatisation() {
               </div>
             </div>
             <div>
-              <h2 className="text-4xl font-bold mb-6 text-gray-800">Installation <span className="text-green-600">Professionnelle</span></h2>
-              <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-                Notre équipe d&apos;experts ClimGo assure une installation rapide et professionnelle de votre climatisation. 
-                Nous respectons les normes en vigueur et vous garantissons un service de qualité.
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 text-blue-800">Murale</h2>
+              
+              <p className="text-base sm:text-lg text-gray-700 mb-4 sm:mb-6 leading-relaxed">
+                <strong>Polyvalente, élégante, accessible</strong><br/>
+                Compacte, performante et facile à intégrer, la climatisation murale s&apos;adapte à tous les espaces. Elle chauffe et rafraîchit avec précision, sans prendre de place.
               </p>
-              <div className="space-y-4">
+              <div className="grid grid-cols-1 gap-4 sm:gap-6">
                 <div className="flex items-start">
-                  <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-4 mt-1">
-                    <svg className="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-4 mt-1 flex-shrink-0">
+                    <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                   </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-800">Étude personnalisée</h4>
-                    <p className="text-gray-600 text-sm">Analyse de vos besoins et conseils sur la solution optimale</p>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-800 mb-2">Ce que vous y gagnez</h3>
+                    <div className="text-gray-600 text-sm space-y-2">
+                      <p>Facile à entretenir</p>
+                      <p>Mode chaud/froid toute l&apos;année</p>
+                      <p>S&apos;intègre discrètement dans toutes les pièces</p>
+                    </div>
                   </div>
                 </div>
-                <div className="flex items-start">
-                  <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-4 mt-1">
-                    <svg className="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-              </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-800">Installation certifiée</h4>
-                    <p className="text-gray-600 text-sm">Techniciens qualifiés RGE pour une installation aux normes</p>
-            </div>
-                </div>
-                <div className="flex items-start">
-                  <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-4 mt-1">
-                    <svg className="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-800">Garantie et SAV</h4>
-                    <p className="text-gray-600 text-sm">Garantie constructeur et service après-vente réactif</p>
-              </div>
+                <div className="mt-4">
+                  <Link href="/devis" className="block w-full">
+                    <Button className="bg-blue-600 text-white hover:bg-blue-700 w-full py-3 px-6 transition-all duration-300 cursor-pointer">
+                      Demander un devis
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* FAQ */}
-        <section className="mb-16">
-          <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">Questions fréquentes sur la <span className="text-green-600">Climatisation</span></h2>
-          <div className="max-w-4xl mx-auto space-y-6">
-            <div className="bg-white p-6 rounded-xl shadow-lg border-l-4 border-green-500">
-              <h3 className="text-xl font-bold mb-3 text-gray-800">Quelle puissance de climatisation choisir ?</h3>
-              <p className="text-gray-700 leading-relaxed">
-                La puissance dépend de la surface à climatiser, de l&apos;isolation et de l&apos;exposition. 
-                Comptez environ 100W par m² pour une pièce bien isolée. Nos experts ClimGo vous conseillent pour choisir la puissance optimale.
-              </p>
+        {/* Gainable */}
+        <section className="my-8 sm:my-12 px-4 sm:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center max-w-6xl mx-auto">
+            <div className="order-2 lg:order-1">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 text-green-800">Gainable</h2>
+              <div className="text-base sm:text-lg text-gray-700 mb-4 sm:mb-6 leading-relaxed">
+                <strong>Invisible, mais redoutablement efficace</strong><br/>
+                Encastrée dans les combles ou le plafond, la clim gainable diffuse une température homogène pièce par pièce. Idéale pour les projets neufs ou les rénovations haut de gamme.
+              </div>
+              <div className="grid grid-cols-1 gap-4 sm:gap-6">
+                <div className="flex items-start">
+                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-4 mt-1 flex-shrink-0">
+                    <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-800 mb-2">Ce que vous y gagnez</h3>
+                    <div className="text-gray-600 text-sm space-y-2">
+                      <p>Aucun appareil visible, silence total</p>
+                      <p>Confort centralisé et pilotage pièce par pièce</p>
+                      <p>Esthétique soignée, parfaite en maison contemporaine</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <Link href="/devis" className="block w-full">
+                    <Button className="bg-green-600 text-white hover:bg-green-700 w-full py-3 px-6 transition-all duration-300 cursor-pointer">
+                      Demander un devis
+                    </Button>
+                  </Link>
+                </div>
+              </div>
             </div>
-            <div className="bg-white p-6 rounded-xl shadow-lg border-l-4 border-green-500">
-              <h3 className="text-xl font-bold mb-3 text-gray-800">Combien coûte l&apos;installation d&apos;une climatisation ?</h3>
-              <p className="text-gray-700 leading-relaxed">
-                Le prix varie selon le type d&apos;appareil et la complexité de l&apos;installation. 
-                Comptez entre 1 500€ et 4 000€ pour une climatisation murale. Demandez votre devis gratuit pour une estimation précise.
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-xl shadow-lg border-l-4 border-green-500">
-              <h3 className="text-xl font-bold mb-3 text-gray-800">Une climatisation réversible peut-elle remplacer le chauffage ?</h3>
-              <p className="text-gray-700 leading-relaxed">
-                Oui, une climatisation réversible peut être une solution de chauffage efficace, surtout dans les régions tempérées. 
-                Elle consomme moins qu&apos;un chauffage électrique classique et offre un excellent confort.
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-xl shadow-lg border-l-4 border-green-500">
-              <h3 className="text-xl font-bold mb-3 text-gray-800">À quelle fréquence entretenir sa climatisation ?</h3>
-              <p className="text-gray-700 leading-relaxed">
-                Un entretien annuel est recommandé pour maintenir les performances et la durée de vie de votre climatisation. 
-                ClimGo propose des contrats d&apos;entretien pour un suivi optimal de votre installation.
-              </p>
+            <div className="relative order-1 lg:order-2">
+              <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-xl">
+                <Image 
+                  src="/AnimeGainable.webp" 
+                  alt="Schéma pompe à chaleur Air/Eau ClimGo"
+                  width={500}
+                  height={400}
+                  className="w-full h-auto rounded-lg"
+                />
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Call to Action */}
-        <section className="text-center bg-gradient-to-br from-green-600 to-emerald-700 text-white py-16 rounded-2xl shadow-2xl">
-          <h2 className="text-4xl font-bold mb-6">Prêt pour votre nouvelle <span className="text-green-300">Climatisation</span> ?</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
-            Contactez ClimGo dès aujourd&apos;hui pour un devis personnalisé et profitez d&apos;un confort optimal toute l&apos;anné
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link href="/devis" passHref>
-              <Button variant="secondary" size="lg" className="bg-white text-green-600 hover:bg-gray-100 font-semibold px-8 py-4 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200">
-                Demander un devis gratuit
-              </Button>
-            </Link>
-            <Link href="/contact" passHref>
-              <Button variant="outline" size="lg" className="border-2 bg-transparent border-white text-white hover:bg-white hover:text-green-600 font-semibold px-8 py-4 rounded-xl transition-all duration-200">
-                Nous appeler
-              </Button>
-            </Link>
+        {/* Console */}
+        <section className="my-8 sm:my-12 px-4 sm:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center max-w-6xl mx-auto">
+            <div className="relative">
+              <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-xl">
+                <Image 
+                  src="/AnimeConsole.webp" 
+                  alt="Schéma pompe à chaleur Air/Eau ClimGo"
+                  width={500}
+                  height={400}
+                  className="w-full h-auto rounded-lg"
+                />
+              </div>
+            </div>
+            <div>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 text-red-800">Console</h2>
+              <div className="text-base sm:text-lg text-gray-700 mb-4 sm:mb-6 leading-relaxed">
+                <strong>Discrète, pratique, polyvalente</strong><br/>
+                Installée en bas de mur, comme un radiateur, la console est idéale en rénovation ou en remplacement d&apos;un ancien système.
+              </div>
+              <div className="grid grid-cols-1 gap-4 sm:gap-6">
+                <div className="flex items-start">
+                  <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center mr-4 mt-1 flex-shrink-0">
+                    <svg className="w-4 h-4 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-800 mb-2">Ce que vous y gagnez</h3>
+                    <div className="text-gray-600 text-sm space-y-2">
+                      <p>Chauffe rapidement, rafraîchit efficacement</p>
+                      <p>Pose rapide et sans gros travaux</p>
+                      <p>Idéale en complément de radiateurs</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <Link href="/devis" className="block w-full">
+                    <Button className="bg-red-600 text-white hover:bg-red-700 w-full py-3 px-6 transition-all duration-300 cursor-pointer">
+                      Demander un devis
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
+
+        {/* Cassette */}
+        <section className="my-8 sm:my-12 px-4 sm:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center max-w-6xl mx-auto">
+            <div className="order-2 lg:order-1">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 text-yellow-800">Cassette</h2>
+              <div className="text-base sm:text-lg text-gray-700 mb-4 sm:mb-6 leading-relaxed">
+                <strong>La solution pro, en toute discrétion</strong><br/>
+                Parfaite pour les grandes pièces ou les locaux tertiaires, la cassette se pose au plafond pour une diffusion multidirectionnelle.
+              </div>
+              <div className="grid grid-cols-1 gap-4 sm:gap-6">
+                <div className="flex items-start">
+                  <div className="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center mr-4 mt-1 flex-shrink-0">
+                    <svg className="w-4 h-4 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-800 mb-2">Ce que vous y gagnez</h3>
+                    <div className="text-gray-600 text-sm space-y-2">
+                      <p>Confort homogène dans les grands volumes</p>
+                      <p>Parfait pour bureaux, commerces ou grandes pièces à vivre</p>
+                      <p>Design sobre, modulation pièce par pièce</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <Link href="/devis" className="block w-full">
+                    <Button className="bg-yellow-600 text-white hover:bg-yellow-700 w-full py-3 px-6 transition-all duration-300 cursor-pointer">
+                      Demander un devis
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+            <div className="relative order-1 lg:order-2">
+              <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-xl">
+                <Image 
+                  src="/AnimeCassette.webp" 
+                  alt="Schéma pompe à chaleur Air/Eau ClimGo"
+                  width={500}
+                  height={400}
+                  className="w-full h-auto rounded-lg"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Aides Financières */}
+        <section className="mb-8 sm:mb-16 bg-gradient-to-br from-green-100 to-emerald-100 py-8 sm:py-12 rounded-2xl mx-4 sm:mx-6">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-6 sm:mb-8 text-gray-800">Pourquoi Choisir ClimGo ?</h2>
+            <p className="text-lg sm:text-xl text-center mb-6 sm:mb-10 text-gray-700 font-bold">Un savoir-faire maîtrisé, au service de votre confort toute l&apos;année.</p>
+            
+            <p className="text-base sm:text-lg text-gray-700 mb-6 leading-relaxed text-center sm:text-left">Chez ClimGO, chaque projet est pensé sur-mesure. Nous installons des systèmes de climatisation fiables, discrets et performants, adaptés à vos besoins et à l&apos;esthétique de votre logement. Le confort, sans le compromis.</p>
+            
+            <div className="text-center mt-6 sm:mt-8">
+              <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-700 mb-4">Engagement ClimGO ?</h3> 
+              <p className="text-base sm:text-lg text-gray-700 mb-6 leading-relaxed">Vous garantir une température idéale en toute saison, un appareil bien posé, silencieux, économe… et un service qui reste joignable quand vous en avez besoin.</p>
+              <Link href="/devis">
+                <Button className="bg-green-600 hover:bg-green-700 text-white px-6 sm:px-8 py-3 rounded-xl font-semibold shadow-lg transform hover:scale-105 transition-all duration-200 w-full sm:w-auto">
+                  Demander un devis
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ */}<>
+        <section className="mb-8 sm:mb-16 px-4 sm:px-6" itemScope itemType="https://schema.org/FAQPage">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-8 sm:mb-12 text-gray-800">FAQ - Climatisation</h2>
+          <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+            <div className="flip-card h-40 sm:h-48" itemScope itemProp="mainEntity" itemType="https://schema.org/Question">
+              <div className="flip-card-inner">
+                <div className="flip-card-front">
+                  <h3 className="text-lg sm:text-xl font-semibold text-white px-2" itemProp="name">
+                    Quel type de climatisation choisir ?
+                  </h3>
+                </div>
+                <div className="flip-card-back" itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
+                  <p className="text-white text-sm sm:text-base px-2" itemProp="text">
+                    Tout dépend de votre logement : mural pour l&apos;efficacité, gainable pour la discrétion, console pour les combles, cassette pour les grandes pièces.
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="flip-card h-40 sm:h-48" itemScope itemProp="mainEntity" itemType="https://schema.org/Question">
+              <div className="flip-card-inner">
+                <div className="flip-card-front">
+                  <h3 className="text-lg sm:text-xl font-semibold text-white px-2" itemProp="name">
+                    Est-ce que ça fait du bruit ?           
+                  </h3>
+                </div>
+                <div className="flip-card-back" itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
+                  <p className="text-white text-sm sm:text-base px-2" itemProp="text">
+                    Non. Les modèles qu&apos;on installe sont silencieux, vous oubliez même qu&apos;ils sont là.
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="flip-card h-40 sm:h-48" itemScope itemProp="mainEntity" itemType="https://schema.org/Question">
+              <div className="flip-card-inner">
+                <div className="flip-card-front">
+                  <h3 className="text-lg sm:text-xl font-semibold text-white px-2" itemProp="name">
+                    La climatisation consomme-t-elle beaucoup ?
+                  </h3>
+                </div>
+                <div className="flip-card-back" itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
+                  <p className="text-white text-sm sm:text-base px-2" itemProp="text">
+                    Les nouvelles générations sont très économes. Et en mode chauffage, elles consomment 3 à 4 fois moins qu&apos;un convecteur.            
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="flip-card h-40 sm:h-48" itemScope itemProp="mainEntity" itemType="https://schema.org/Question">
+              <div className="flip-card-inner">
+                <div className="flip-card-front">
+                  <h3 className="text-lg sm:text-xl font-semibold text-white px-2" itemProp="name">
+                    Peut-on bénéficier d&apos;aides ?
+                  </h3>
+                </div>
+                <div className="flip-card-back" itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
+                  <p className="text-white text-sm sm:text-base px-2" itemProp="text">
+                    Oui, selon votre situation. On vous guide pas à pas pour les obtenir facilement.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <style jsx>{`
+          .flip-card {
+            background-color: transparent;
+            perspective: 1000px;
+          }
+
+          .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+          }
+
+          .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+          }
+
+          .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+          }
+
+          .flip-card-front {
+            background: green;
+            color: white;
+          }
+
+          .flip-card-back {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            transform: rotateY(180deg);
+          }
+
+          .flip-card-front h3 {
+            margin: 0;
+            font-weight: 600;
+            line-height: 1.4;
+          }
+
+          .flip-card-back p {
+            margin: 0;
+            line-height: 1.5;
+            text-align: center;
+          }
+
+          @media (max-width: 640px) {
+            .flip-card-front, .flip-card-back {
+              padding: 0.75rem;
+            }
+          }
+        `}</style> </>
       </main>
       
       <Footer />

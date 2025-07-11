@@ -10,29 +10,54 @@ import Image from 'next/image';
 
 
 export default function Home() {
-  const [scaleIn, setScaleIn] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [, setIsTransitioning] = useState(false);
+  
+  const bgImages = [
+    "/sdb-pyla.jpeg",
+    "/climcauderan.jpeg"
+  ];
 
+  // Animation de fond avec crossfade corrigée
   useEffect(() => {
-    setScaleIn(true);
-  }, []);
+    const interval = setInterval(() => {
+      setIsTransitioning(true);
+      
+      // Attendre que la transition commence, puis changer l'image
+      setTimeout(() => {
+        setCurrentIndex((prev) => (prev + 1) % bgImages.length);
+        setIsTransitioning(false);
+      }, 1000); // Durée de la transition crossfade
+    }, 5000); // 5 secondes par image
+
+    return () => clearInterval(interval);
+  }, [bgImages.length]);
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       <Header />
       
       <main className="flex-grow">
-        {/* Hero Section with Background Image and Scale Transition */}
-        <section
-          className="relative w-full h-screen flex items-center justify-center overflow-hidden"
-        >
-          {/* Image de fond animée */}
-          <div
-            className={`absolute inset-0 bg-cover bg-center transition-transform duration-[3200ms] ease-[cubic-bezier(0.4,0,0.2,1)] ${scaleIn ? 'scale-110' : 'scale-100'}`}
-            style={{ backgroundImage: "url('/sdb-pyla.jpeg')" }}
-          />
+        {/* Hero Section avec carrousel d'images corrigé */}
+        <section className="relative w-full h-screen flex items-center justify-center overflow-hidden">
+          {/* Images de fond avec système de crossfade */}
+          {bgImages.map((image, index) => (
+            <div
+              key={index}
+              className="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out"
+              style={{ 
+                backgroundImage: `url('${image}')`,
+                opacity: currentIndex === index ? 1 : 0,
+                transform: 'scale(1.05)', // Effet Ken Burns léger
+                animation: currentIndex === index ? 'kenBurns 5s ease-in-out infinite alternate' : 'none'
+              }}
+            />
+          ))}
+          
           {/* Overlay sombre */}
-          <div className="absolute inset-0 bg-black opacity-50"></div>
-          <div className="relative z-10 text-center text-white px-4 md:px-8 animate-fade-in-up">
+          <div className="absolute inset-0 bg-black opacity-50 z-10"></div>
+          
+          <div className="relative z-20 text-center text-white px-4 md:px-8 animate-fade-in-up">
             <h1 className="text-4xl md:text-6xl font-bold mb-4">
               ClimGO - Chauffage & Climatisation
             </h1>
@@ -54,7 +79,8 @@ export default function Home() {
               </Link>
             </div>
           </div>
-          <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10">
+          
+          <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20">
             <svg
               className="w-12 h-12 text-white animate-bounce"
               fill="none"
@@ -65,57 +91,179 @@ export default function Home() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
             </svg>
           </div>
+          
+          {/* Animation Ken Burns en CSS */}
+          <style jsx>{`
+            @keyframes kenBurns {
+              0% { transform: scale(1.05); }
+              100% { transform: scale(1.15); }
+            }
+            
+            @keyframes fade-in-up {
+              from {
+                opacity: 0;
+                transform: translateY(30px);
+              }
+              to {
+                opacity: 1;
+                transform: translateY(0);
+              }
+            }
+            
+            .animate-fade-in-up {
+              animation: fade-in-up 1s ease-out;
+            }
+          `}</style>
         </section>
 
-        {/* Services Section */}
-        <section className="py-12 md:py-16 bg-white">
-          <div className="container mx-auto px-4">
-            <h1 className="text-3xl font-bold text-center mb-8 md:mb-12 text-gray-800">Nos Services</h1>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
-              <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4 mx-auto md:mx-0">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7.618 9.084a8.126 8.126 0 011.356-2.342M16.382 9.084a8.126 8.126 0 00-1.356-2.342M7.618 14.916a8.126 8.126 0 001.356 2.342m7.408-2.342a8.126 8.126 0 011.356 2.342M9 11a8.09 8.09 0 01-.876-1.916M15 11a8.09 8.09 0 00.876-1.916M9 13a8.09 8.09 0 00-.876 1.916m6.876-1.916a8.09 8.09 0 01.876 1.916" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-semibold mb-2 text-gray-800 text-center md:text-left">Climatisation</h3>
-                <p className="text-gray-600 text-center md:text-left">Installation et maintenance de systèmes de climatisation pour un confort optimal en été.</p>
-              </div>
-              <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4 mx-auto md:mx-0">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-semibold mb-2 text-gray-800 text-center md:text-left">Pompes à chaleur</h3>
-                <p className="text-gray-600 text-center md:text-left">Solutions écologiques et économiques pour chauffer votre maison ou bureau toute l’année.</p>
-              </div>
-              <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4 mx-auto md:mx-0">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-semibold mb-2 text-gray-800 text-center md:text-left">Entretien & Réparation</h3>
-                <p className="text-gray-600 text-center md:text-left">Services d’entretien régulier et de réparation pour garantir la longévité de vos équipements.</p>
-              </div>
-            </div>
+
+        {/* Section Présentation ClimGO moderne */}
+        <section className="container mx-auto py-16 my-12 bg-white backdrop-blur-md shadow-lg rounded-3xl mx-2 md:mx-auto  max-w-5xl flex flex-col items-center">
+          <div className="w-full max-w-3xl px-6 md:px-12 text-center flex flex-col items-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">ClimGO est votre partenaire local entre Bordeaux et le Bassin d&apos;Arcachon</h2>
+            <p className="text-lg md:text-xl text-gray-700 mb-6">
+              Pour tous vos projets de chauffage, climatisation et confort thermique. Basée entre Bordeaux et le Bassin d’Arcachon, l&apos;entreprise ClimGO, certifiée RGE, vous accompagne dans tous vos projets d’installation, de dépannage et de maintenance en pompe à chaleur, chauffage, climatisation, eau chaude sanitaire et énergies renouvelables.
+            </p>
+            <p className="text-base md:text-lg text-gray-600 mb-6">
+              Notre mission est simple : vous garantir confort, performance et sérénité, jour après jour. Grâce à notre savoir-faire, nous vous proposons des solutions durables, soignées et parfaitement adaptées à vos besoins. En complément, nous sélectionnons des équipements fiables et performants, à haute efficacité énergétique. C&apos;est pourquoi chaque installation bénéficie d&apos;un suivi rigoureux, dans le respect des délais et de vos attentes.
+            </p>
+            <Link href="/devis">
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg text-lg mb-8 transition duration-300 ease-in-out transform hover:scale-105">
+                Obtenir un devis personnalisé
+              </Button>
+            </Link>
+            <h3 className="text-2xl font-semibold text-gray-900 mt-4 mb-4">Notre savoir-faire :</h3>
+            <p className="text-base md:text-lg text-gray-600 mb-8">
+              Chez ClimGO, nous vous accompagnons dans tous les domaines du confort thermique et sanitaire : chauffage, climatisation, eau chaude sanitaire et maintenance. Nos solutions sont pensées pour allier performance, durabilité, économies d&apos;énergie et sérénité, année après année.
+            </p>
           </div>
         </section>
 
+      {/* Section Services */}
+      <section className="py-12 md:py-16 bg-gray-50 container mx-auto">
+      <div className="w-full grid grid-cols-2 md:flex justify-center items-center gap-8">
+            {/* Eau Chaude Sanitaire */}
+            <Link href="/services/eau-chaude-sanitaire" className="flex flex-col w-full items-center bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition-shadow w-1/4">
+              <div className="w-14 h-14 mb-3 flex items-center justify-center bg-blue-100 rounded-full">
+                <svg className="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 3v18m0 0c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8z"/></svg>
+              </div>
+              <span className="font-semibold text-gray-800 text-lg mb-1">Eau Chaude Sanitaire ↪</span>
+            </Link>
+            {/* Chauffage */}
+            <Link href="/services/chauffage" className="flex flex-col w-full items-center bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition-shadow w-1/4">
+              <div className="w-14 h-14 mb-3 flex items-center justify-center bg-orange-100 rounded-full">
+                <svg className="w-8 h-8 text-orange-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 2a7 7 0 017 7c0 3.866-3.134 7-7 7s-7-3.134-7-7a7 7 0 017-7zm0 0v20"/></svg>
+              </div>
+              <span className="font-semibold text-gray-800 text-lg mb-1">Chauffage ↪</span>
+            </Link>
+            {/* Climatisation */}
+            <Link href="/services/climatisation" className="flex flex-col w-full items-center bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition-shadow w-1/4">
+              <div className="w-14 h-14 mb-3 flex items-center justify-center bg-cyan-100 rounded-full">
+                <svg className="w-8 h-8 text-cyan-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M4 12h16M12 4v16m7.07-7.07l-2.83-2.83M6.93 6.93l2.83 2.83m0 0l2.83-2.83m-2.83 2.83l-2.83 2.83"/></svg>
+              </div>
+              <span className="font-semibold text-gray-800 text-lg mb-1">Climatisation ↪</span>
+            </Link>
+            {/* Maintenance */}
+            <Link href="/services/entretien-et-reparation" className="flex flex-col w-full items-center bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition-shadow w-1/4">
+              <div className="w-14 h-14 mb-3 flex items-center justify-center bg-green-100 rounded-full">
+                <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <span className="font-semibold text-gray-800 text-lg mb-1">Maintenance ↪</span>
+            </Link>
+          </div>
+      </section>
+
+      {/* Section Nos Engagements */}
+      <section className="py-16 bg-white container mx-auto">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">Nos Engagements</h2>
+          <p className="text-lg md:text-xl text-gray-700 mb-10">
+            Nos engagements sont simples : <span className="font-semibold text-black">qualité</span>, <span className="font-semibold text-black">clarté</span>, et <span className="font-semibold text-black">respect du client</span> à chaque étape.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Qualité */}
+            <div className="flex flex-col items-center bg-gray-50 rounded-2xl shadow p-8 hover:shadow-lg transition-shadow">
+              <div className="w-14 h-14 mb-4 flex items-center justify-center bg-blue-100 rounded-full">
+                <svg className="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 3v18m0 0c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8z"/></svg>
+              </div>
+              <h3 className="font-semibold text-xl text-gray-800 mb-2">Qualité</h3>
+              <p className="text-gray-600">Des installations, rigoureusement sélectionnées et contrôlées.</p>
+            </div>
+            {/* Service personnalisé */}
+            <div className="flex flex-col items-center bg-gray-50 rounded-2xl shadow p-8 hover:shadow-lg transition-shadow">
+              <div className="w-14 h-14 mb-4 flex items-center justify-center bg-green-100 rounded-full">
+                <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <h3 className="font-semibold text-xl text-gray-800 mb-2">Service personnalisé</h3>
+              <p className="text-gray-600">Un accompagnement sur mesure, discret et à votre écoute.</p>
+            </div>
+            {/* Ponctualité & rigueur */}
+            <div className="flex flex-col items-center bg-gray-50 rounded-2xl shadow p-8 hover:shadow-lg transition-shadow">
+              <div className="w-14 h-14 mb-4 flex items-center justify-center bg-yellow-100 rounded-full">
+                <svg className="w-8 h-8 text-yellow-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 2a7 7 0 017 7c0 3.866-3.134 7-7 7s-7-3.134-7-7a7 7 0 017-7zm0 0v20"/></svg>
+              </div>
+              <h3 className="font-semibold text-xl text-gray-800 mb-2">Ponctualité & rigueur</h3>
+              <p className="text-gray-600">Intervention à l&apos;heure et respect des délais annoncés.</p>
+            </div>
+            {/* Efficacité & Propreté */}
+            <div className="flex flex-col items-center bg-gray-50 rounded-2xl shadow p-8 hover:shadow-lg transition-shadow">
+              <div className="w-14 h-14 mb-4 flex items-center justify-center bg-cyan-100 rounded-full">
+                <svg className="w-8 h-8 text-cyan-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M4 12h16M12 4v16m7.07-7.07l-2.83-2.83M6.93 6.93l2.83 2.83m0 0l2.83-2.83m-2.83 2.83l-2.83 2.83"/></svg>
+              </div>
+              <h3 className="font-semibold text-xl text-gray-800 mb-2">Efficacité & Propreté</h3>
+              <p className="text-gray-600">Une intervention rapide, soignée, et sans surprise.</p>
+            </div> 
+          </div>
+        </div>
+      </section>
+
+      <section className="p-12 bg-gray-50 my-24">
+        <div className="w-full mx-auto px-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 text-gray-900">Nos marques partenaires</h2>
+          <CarouselMarques />
+        </div>
+      </section>
+
+       
         {/* About Section */}
         <section className="py-12 md:py-16 bg-white">
-          <div className="w-fullmx-auto px-4">
-            <h1 className="text-4xl font-bold text-center mb-8 md:mb-12 text-gray-800">Pourquoi choisir ClimGo ?</h1>
-            <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 max-w-6xl mx-auto">
-              <div className="md:w-5/12 bg-white p-6 md:p-8 rounded-lg shadow-md">
-                <h3 className="text-2xl font-semibold mb-4 text-gray-800">Expertise & Qualité</h3>
-                <p className="text-gray-600 mb-4">Avec des années d’expérience, ClimGo s’engage à fournir des solutions adaptées à vos besoins spécifiques, avec des produits de haute qualité.</p>
-                <p className="text-gray-600">Nous sommes une entreprise SAS dédiée à la satisfaction de nos clients, en offrant un service personnalisé et des conseils d’experts.</p>
+          <div className="w-full mx-auto px-4 max-w-6xl">
+            <h1 className="text-4xl font-bold text-center mb-8 md:mb-12 text-gray-800">Pourquoi choisir ClimGo&nbsp;?</h1>
+            <p className="text-lg md:text-xl text-gray-700 text-center mb-12 max-w-3xl mx-auto">
+              Votre confort mérite une attention particulière, nous avons développé une approche élégante et sur-mesure pour chacun de nos clients. Choisir ClimGO, c’est opter pour&nbsp;:
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Expertise */}
+              <div className="flex flex-col items-center bg-gray-50 rounded-2xl shadow p-8 hover:shadow-lg transition-shadow">
+                <div className="w-14 h-14 mb-4 flex items-center justify-center bg-blue-100 rounded-full">
+                  <svg className="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 0v10l6 3"/></svg>
+                </div>
+                <h3 className="font-semibold text-xl text-gray-800 mb-2">Expertise</h3>
+                <p className="text-gray-600 text-center">Chaque projet est unique. Notre savoir-faire technique et notre maîtrise des dernières innovations garantissent une qualité irréprochable, adaptée à vos attentes les plus exigeantes.</p>
               </div>
-              <div className="md:w-7/12">
-                <Image width={800} height={600} src="/InstallClim.jpg" alt="Installation de climatisation" className="w-full rounded-lg shadow-md" />
+              {/* Accompagnement Personnalisé */}
+              <div className="flex flex-col items-center bg-gray-50 rounded-2xl shadow p-8 hover:shadow-lg transition-shadow">
+                <div className="w-14 h-14 mb-4 flex items-center justify-center bg-green-100 rounded-full">
+                  <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+                </div>
+                <h3 className="font-semibold text-xl text-gray-800 mb-2">Accompagnement Personnalisé</h3>
+                <p className="text-gray-600 text-center">Nous prenons le temps de vous écouter pour comprendre précisément vos besoins. Chaque installation est conçue sur mesure, pour un résultat impeccable à votre image.</p>
+              </div>
+              {/* Discrétion et Confiance */}
+              <div className="flex flex-col items-center bg-gray-50 rounded-2xl shadow p-8 hover:shadow-lg transition-shadow">
+                <div className="w-14 h-14 mb-4 flex items-center justify-center bg-yellow-100 rounded-full">
+                  <svg className="w-8 h-8 text-yellow-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 17a5 5 0 100-10 5 5 0 000 10zm0 0v4m0-4v-4"/></svg>
+                </div>
+                <h3 className="font-semibold text-xl text-gray-800 mb-2">Discrétion et Confiance</h3>
+                <p className="text-gray-600 text-center">Votre intimité est précieuse. ClimGO s’engage à intervenir dans le plus grand respect de votre vie privée et à assurer une totale confidentialité.</p>
+              </div>
+              {/* Engagement Durable */}
+              <div className="flex flex-col items-center bg-gray-50 rounded-2xl shadow p-8 hover:shadow-lg transition-shadow">
+                <div className="w-14 h-14 mb-4 flex items-center justify-center bg-cyan-100 rounded-full">
+                  <svg className="w-8 h-8 text-cyan-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7"/></svg>
+                </div>
+                <h3 className="font-semibold text-xl text-gray-800 mb-2">Engagement Durable</h3>
+                <p className="text-gray-600 text-center">Nous privilégions des solutions à haute performance énergétique, respectueuses de l’environnement et pensées pour durer. Choisir ClimGO, c’est investir sereinement dans l’avenir.</p>
               </div>
             </div>
           </div>
@@ -287,7 +435,7 @@ export default function Home() {
             <p className="text-lg md:text-xl text-gray-600 mb-6 md:mb-8 max-w-2xl mx-auto">Contactez-nous dès aujourd’hui pour un devis gratuit ou pour en savoir plus sur nos solutions.</p>
             <div className="flex flex-col sm:flex-row justify-center gap-4 md:gap-6">
               <Button asChild variant="default" size="lg" className="bg-blue-600 text-white hover:bg-blue-700 py-2 px-4 md:py-3 md:px-6 text-base md:text-lg">
-                <Link href="/contact">Nous contacter</Link>
+                <Link href="/devis">Obtenir un Devis</Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="border-blue-600 text-blue-600 hover:bg-blue-50 py-2 px-4 md:py-3 md:px-6 text-base md:text-lg">
                 <Link href="/services">En savoir plus</Link>
@@ -321,63 +469,22 @@ export default function Home() {
           </div>
         </section>
 
-        {/* FAQ Section */}
-        <section className="py-12 md:py-16 bg-gray-50" itemScope itemType="https://schema.org/FAQPage">
-          <div className="max-w-7xl mx-auto px-4">
-            <h1 className="text-3xl font-bold text-center mb-8 md:mb-12 text-gray-800">Questions Fréquentes sur la <strong>Climatisation</strong> et les <strong>Pompes à Chaleur</strong></h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-7xl mx-auto">
-              <div className="space-y-6 md:space-y-0 md:flex md:flex-col md:gap-6">
-                <div className="bg-white p-6 rounded-lg shadow-md w-full h-64" itemScope itemProp="mainEntity" itemType="https://schema.org/Question">
-                  <h3 className="text-xl font-semibold mb-3 text-gray-800" itemProp="name">Quel est le coût d’installation d’une <strong>climatisation</strong> ?</h3>
-                  <div className="text-gray-600" itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
-                    <p itemProp="text">Le coût d’installation d’une <strong>climatisation</strong> varie en fonction de plusieurs facteurs, comme la taille de la pièce, le type de système (split, multi-split, etc.) et la complexité de l’installation. En moyenne, cela peut aller de 1 500 € à 5 000 €. Chez ClimGo, nous offrons un <strong>devis gratuit</strong> pour évaluer vos besoins spécifiques.</p>
-                  </div>
-                </div>
-                <div className="bg-white p-6 rounded-lg shadow-md w-full h-64" itemScope itemProp="mainEntity" itemType="https://schema.org/Question">
-                  <h3 className="text-xl font-semibold mb-3 text-gray-800" itemProp="name">Les <strong>pompes à chaleur</strong> sont-elles vraiment économiques ?</h3>
-                  <div className="text-gray-600" itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
-                    <p itemProp="text">Oui, les <strong>pompes à chaleur</strong> sont très économiques à long terme. Elles utilisent l’énergie de l’air ou du sol pour chauffer ou refroidir votre maison, ce qui réduit considérablement les coûts énergétiques par rapport aux systèmes traditionnels. Elles sont également éligibles à des <strong>aides financières</strong> en France, comme <strong>MaPrimeRénov’</strong>.</p>
-                  </div>
-                </div>
-                <div className="bg-white p-6 rounded-lg shadow-md w-full h-64" itemScope itemProp="mainEntity" itemType="https://schema.org/Question">
-                  <h3 className="text-xl font-semibold mb-3 text-gray-800" itemProp="name">À quelle fréquence faut-il entretenir une <strong>climatisation</strong> ?</h3>
-                  <div className="text-gray-600" itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
-                    <p itemProp="text">Il est recommandé d’entretenir votre <strong>climatisation</strong> au moins une fois par an pour garantir son bon fonctionnement et prolonger sa durée de vie. Cela inclut le nettoyage des filtres, la vérification des niveaux de réfrigérant et l’inspection des composants. ClimGo propose des <strong>contrats d’entretien</strong> adaptés à vos besoins.</p>
-                  </div>
-                </div>
-                <div className="bg-white p-6 rounded-lg shadow-md w-full h-64" itemScope itemProp="mainEntity" itemType="https://schema.org/Question">
-                  <h3 className="text-xl font-semibold mb-3 text-gray-800" itemProp="name">Puis-je installer une <strong>pompe à chaleur</strong> dans une maison ancienne ?</h3>
-                  <div className="text-gray-600" itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
-                    <p itemProp="text">Oui, il est tout à fait possible d’installer une <strong>pompe à chaleur</strong> dans une maison ancienne, mais cela peut nécessiter des travaux d’adaptation, notamment pour l’isolation ou le système de distribution de chaleur. Nos experts chez ClimGo peuvent évaluer votre situation et vous proposer la meilleure solution.</p>
-                  </div>
-                </div>
+        {/* Fondateur Section */}
+        <section className="text-center bg-gray-50 py-12 md:py-16">
+          <div className="max-w-3xl mx-auto flex flex-col md:flex-row items-center gap-8 px-4">
+            {/* Avatar ou photo */}
+            <div className="flex-shrink-0 flex justify-center md:justify-start w-full md:w-auto">
+              <div className="w-32 h-32 rounded-full bg-blue-100 flex items-center justify-center overflow-hidden shadow-md mx-auto md:mx-0">
+                {/* Remplace l'image ci-dessous par ta photo si tu veux */}
+                <svg className="w-20 h-20 text-blue-400" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-7 8-7s8 3 8 7"/></svg>
               </div>
-              <div className="space-y-6 md:space-y-0 md:flex md:flex-col md:gap-6">
-                <div className="bg-white p-6 rounded-lg shadow-md w-full h-64" itemScope itemProp="mainEntity" itemType="https://schema.org/Question">
-                  <h3 className="text-xl font-semibold mb-3 text-gray-800" itemProp="name">Quelle est la <strong>rentabilité</strong> d’une <strong>pompe à chaleur</strong> par rapport à un chauffage classique ?</h3>
-                  <div className="text-gray-600" itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
-                    <p itemProp="text">La <strong>rentabilité</strong> d’une <strong>pompe à chaleur</strong> est souvent atteinte en 5 à 10 ans, grâce à des économies d’énergie pouvant atteindre 60 % par rapport à un chauffage électrique ou au gaz. Avec les <strong>aides financières</strong> comme <strong>MaPrimeRénov’</strong>, le coût initial est réduit, rendant l’investissement encore plus attractif.</p>
-                  </div>
-                </div>
-                <div className="bg-white p-6 rounded-lg shadow-md w-full h-64" itemScope itemProp="mainEntity" itemType="https://schema.org/Question">
-                  <h3 className="text-xl font-semibold mb-3 text-gray-800" itemProp="name">Combien de temps faut-il pour rentabiliser une <strong>climatisation réversible</strong> ?</h3>
-                  <div className="text-gray-600" itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
-                    <p itemProp="text">La <strong>rentabilité</strong> d’une <strong>climatisation réversible</strong> dépend de son utilisation et des économies réalisées sur le chauffage et la climatisation. En général, elle peut être rentabilisée en 3 à 7 ans, surtout si vous remplacez un système coûteux comme des radiateurs électriques. ClimGo vous aide à choisir le modèle le plus adapté pour maximiser vos économies.</p>
-                  </div>
-                </div>
-                <div className="bg-white p-6 rounded-lg shadow-md w-full h-64" itemScope itemProp="mainEntity" itemType="https://schema.org/Question">
-                  <h3 className="text-xl font-semibold mb-3 text-gray-800" itemProp="name">Quelle est la durée de vie d’une <strong>climatisation</strong> ou d’une <strong>pompe à chaleur</strong> ?</h3>
-                  <div className="text-gray-600" itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
-                    <p itemProp="text">Avec un <strong>entretien régulier</strong>, une <strong>climatisation</strong> peut durer entre 10 et 15 ans, tandis qu’une <strong>pompe à chaleur</strong> peut fonctionner jusqu’à 15-20 ans. Chez ClimGo, nos services d’<strong>entretien</strong> garantissent une longévité optimale de vos équipements.</p>
-                  </div>
-                </div>
-                <div className="bg-white p-6 rounded-lg shadow-md w-full h-64" itemScope itemProp="mainEntity" itemType="https://schema.org/Question">
-                  <h3 className="text-xl font-semibold mb-3 text-gray-800" itemProp="name">Quelles sont les meilleures marques de <strong>climatisation</strong> et de <strong>pompes à chaleur</strong> ?</h3>
-                  <div className="text-gray-600" itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
-                    <p itemProp="text">Des marques comme Daikin, Mitsubishi, Atlantic et Hitachi sont reconnues pour leur fiabilité et leur performance en matière de <strong>climatisation</strong> et de <strong>pompes à chaleur</strong>. Chez ClimGo, nous travaillons avec les meilleurs fabricants pour vous offrir des solutions de qualité adaptées à vos besoins.</p>
-                  </div>
-                </div>
-              </div>
+            </div>
+            {/* Texte */}
+            <div className="flex-1 text-center md:text-left">
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Fondateur de ClimGO</h2>
+              <p className="text-lg text-gray-700 mb-4">Passionné par mon métier depuis plus de 10 ans, je mets mon expérience et mon savoir-faire à votre disposition pour assurer votre confort au quotidien. Proximité, sérieux et qualité guident chacun de mes projets.</p>
+              <p className="text-base text-gray-600 mb-6">Je serai ravi de vous rencontrer.</p>
+              <Link href="/a-propos" className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg text-lg transition duration-300 ease-in-out transform hover:scale-105">Notre histoire &rarr;</Link>
             </div>
           </div>
         </section>
@@ -387,3 +494,49 @@ export default function Home() {
     </div>
   );
 }
+
+const CarouselMarques: React.FC = () => {
+  const images: { src: string; alt: string }[] = [
+    { src: "/HeiwaLogo.png", alt: "Heiwa" },
+    { src: "/DaikinLogo.png", alt: "Daikin" },
+    { src: "/Mitsubishi-Electric-Logo.png", alt: "Mitsubishi Electric" },
+  ];
+  
+  const [index, setIndex] = React.useState(0);
+  const [isFading, setIsFading] = React.useState(false);
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setIsFading(true);
+      
+      // Délai pour le fade out, puis changement d'image
+      setTimeout(() => {
+        setIndex((prevIndex) => (prevIndex + 1) % images.length);
+        setIsFading(false);
+      }, 300); // 300ms pour le fade out
+      
+    }, 4000); // 5 secondes par image
+    
+    return () => clearInterval(timer);
+  }, [images.length]); // Seulement dépendant de images.length
+
+  return (
+    <div className="carousel-container relative min-h-[320px] max-w-2xl mx-auto flex items-center justify-center">
+        <Image
+          width={1000}
+          height={500}
+          src={images[index].src}
+          alt={images[index].alt}
+          className={`carousel-image ${isFading ? 'fade-out' : 'fade-in'} absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 object-contain 
+            max-h-32 max-w-xs 
+            sm:max-h-40 sm:max-w-md 
+            md:max-h-[320px] md:max-w-[1000px] 
+            w-auto h-auto select-none`}
+          style={{
+            opacity: isFading ? 0 : 1,
+            transition: 'opacity 300ms ease-in-out',
+          }}
+        />
+      </div>
+  );
+};

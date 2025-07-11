@@ -37,7 +37,7 @@ export default function AdminPage() {
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       <Header />
-      <div className="flex justify-end container mx-auto px-4 mt-4">
+      <div className="flex justify-end container mx-auto px-4 mt-4 mt-24">
         <button
           onClick={() => signOut({ callbackUrl: '/' })}
           className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:scale-105"
@@ -45,7 +45,7 @@ export default function AdminPage() {
           Se déconnecter
         </button>
       </div>
-      <main className="flex-grow container mx-auto px-4 py-8">
+      <main className="flex-grow container mx-auto px-4 py-8 my-40">
         <h1 className="text-3xl font-bold text-gray-800 mb-6">Panneau d&apos;Administration</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <Link href="/admin/articles" className="bg-white rounded-lg shadow-lg p-6 border border-gray-100 hover:shadow-xl transition duration-300">
