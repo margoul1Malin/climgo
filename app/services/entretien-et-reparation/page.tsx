@@ -83,10 +83,10 @@ export default function EntretienEtReparation() {
             {/* Q1 */}
             <div className="flip-card h-40 sm:h-48" itemScope itemProp="mainEntity" itemType="https://schema.org/Question">
               <div className="flip-card-inner">
-                <div className="flip-card-front bg-green-700">
+                <div className="flip-card-front bg-blue-600">
                   <h3 className="text-lg sm:text-xl font-semibold text-white px-2" itemProp="name">À quelle fréquence faut-il entretenir une climatisation ou une pompe à chaleur ?</h3>
                 </div>
-                <div className="flip-card-back" itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
+                <div className="flip-card-back bg-green-600" itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
                   <p className="text-white text-sm sm:text-base px-2" itemProp="text">Une fois par an est recommandé pour assurer le bon fonctionnement et allonger la durée de vie de l’équipement.</p>
                 </div>
               </div>
@@ -94,21 +94,21 @@ export default function EntretienEtReparation() {
             {/* Q2 */}
             <div className="flip-card h-40 sm:h-48" itemScope itemProp="mainEntity" itemType="https://schema.org/Question">
               <div className="flip-card-inner">
-                <div className="flip-card-front bg-blue-700">
-                  <h3 className="text-lg sm:text-xl font-semibold text-white px-2" itemProp="name">L’entretien est-il obligatoire ?</h3>
+                <div className="flip-card-front bg-blue-600">
+                  <h3 className="text-lg sm:text-xl font-semibold text-white px-2" itemProp="name">L&apos;entretien est-il obligatoire ?</h3>
                 </div>
-                <div className="flip-card-back" itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
-                  <p className="text-white text-sm sm:text-base px-2" itemProp="text">Oui, dès que l’équipement contient plus de 2 kg de fluide frigorigène (PAC ou clim). C’est une obligation légale pour des raisons de sécurité et d’environnement.</p>
+                <div className="flip-card-back bg-green-600" itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
+                  <p className="text-white text-sm sm:text-base px-2" itemProp="text">Oui, dès que l&apos;équipement contient plus de 2 kg de fluide frigorigène (PAC ou clim). C&apos;est une obligation légale pour des raisons de sécurité et d&apos;environnement.</p>
                 </div>
               </div>
             </div>
             {/* Q3 */}
             <div className="flip-card h-40 sm:h-48" itemScope itemProp="mainEntity" itemType="https://schema.org/Question">
               <div className="flip-card-inner">
-                <div className="flip-card-front bg-emerald-700">
+                <div className="flip-card-front bg-blue-600">
                   <h3 className="text-lg sm:text-xl font-semibold text-white px-2" itemProp="name">L’entretien est-il pris en charge par ClimGO ?</h3>
                 </div>
-                <div className="flip-card-back" itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
+                <div className="flip-card-back bg-green-600" itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
                   <p className="text-white text-sm sm:text-base px-2" itemProp="text">Bien sûr. Nous proposons des contrats sur mesure ou des interventions ponctuelles, selon vos besoins.</p>
                 </div>
               </div>
@@ -116,10 +116,10 @@ export default function EntretienEtReparation() {
             {/* Q4 */}
             <div className="flip-card h-40 sm:h-48" itemScope itemProp="mainEntity" itemType="https://schema.org/Question">
               <div className="flip-card-inner">
-                <div className="flip-card-front bg-yellow-700">
+                <div className="flip-card-front bg-blue-600">
                   <h3 className="text-lg sm:text-xl font-semibold text-white px-2" itemProp="name">Quels sont les risques en cas d&apos;absence d&apos;entretien ?</h3>
                 </div>
-                <div className="flip-card-back" itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
+                <div className="flip-card-back bg-green-600" itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
                   <p className="text-white text-sm sm:text-base px-2" itemProp="text">Des pannes, des surconsommations, des risques d&apos;inconfort, et des coûts supplémentaires. Un entretien régulier évite tout ça.</p>
                 </div>
               </div>
@@ -161,7 +161,6 @@ export default function EntretienEtReparation() {
             color: white;
           }
           .flip-card-back {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             color: white;
             transform: rotateY(180deg);
           }

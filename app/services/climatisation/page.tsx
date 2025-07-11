@@ -11,8 +11,8 @@ export default function Climatisation() {
   const [, setIsTransitioning] = useState(false);
   
   const bgImages = [
-    "/gainable-arca.jpeg",
-    "/climcauderan.jpeg"
+    "/climcauderan.jpeg",
+    "/gainable-arca.jpeg"
   ];
 
   // Animation de fond avec crossfade corrigée
@@ -169,7 +169,18 @@ export default function Climatisation() {
         {/* Gainable */}
         <section className="my-8 sm:my-12 px-4 sm:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center max-w-6xl mx-auto">
-            <div className="order-2 lg:order-1">
+          <div className="relative">
+              <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-xl">
+                <Image 
+                  src="/AnimeGainable.webp" 
+                  alt="Schéma pompe à chaleur Air/Eau ClimGo"
+                  width={500}
+                  height={400}
+                  className="w-full h-auto rounded-lg"
+                />
+              </div>
+            </div>
+            <div className="relative">
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 text-green-800">Gainable</h2>
               <div className="text-base sm:text-lg text-gray-700 mb-4 sm:mb-6 leading-relaxed">
                 <strong>Invisible, mais redoutablement efficace</strong><br/>
@@ -200,17 +211,7 @@ export default function Climatisation() {
                 </div>
               </div>
             </div>
-            <div className="relative order-1 lg:order-2">
-              <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-xl">
-                <Image 
-                  src="/AnimeGainable.webp" 
-                  alt="Schéma pompe à chaleur Air/Eau ClimGo"
-                  width={500}
-                  height={400}
-                  className="w-full h-auto rounded-lg"
-                />
-              </div>
-            </div>
+            
           </div>
         </section>
 
@@ -265,7 +266,18 @@ export default function Climatisation() {
         {/* Cassette */}
         <section className="my-8 sm:my-12 px-4 sm:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center max-w-6xl mx-auto">
-            <div className="order-2 lg:order-1">
+          <div className="relative">
+              <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-xl">
+                <Image 
+                  src="/AnimeCassette.webp" 
+                  alt="Schéma pompe à chaleur Air/Eau ClimGo"
+                  width={500}
+                  height={400}
+                  className="w-full h-auto rounded-lg"
+                />
+              </div>
+            </div>
+            <div className="relative">
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 text-yellow-800">Cassette</h2>
               <div className="text-base sm:text-lg text-gray-700 mb-4 sm:mb-6 leading-relaxed">
                 <strong>La solution pro, en toute discrétion</strong><br/>
@@ -296,17 +308,7 @@ export default function Climatisation() {
                 </div>
               </div>
             </div>
-            <div className="relative order-1 lg:order-2">
-              <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-xl">
-                <Image 
-                  src="/AnimeCassette.webp" 
-                  alt="Schéma pompe à chaleur Air/Eau ClimGo"
-                  width={500}
-                  height={400}
-                  className="w-full h-auto rounded-lg"
-                />
-              </div>
-            </div>
+            
           </div>
         </section>
 
@@ -430,12 +432,12 @@ export default function Climatisation() {
           }
 
           .flip-card-front {
-            background: green;
+            background: #2563eb;
             color: white;
           }
 
           .flip-card-back {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: #16a34a;
             color: white;
             transform: rotateY(180deg);
           }

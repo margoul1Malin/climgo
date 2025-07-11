@@ -11,7 +11,7 @@ export default function Chauffage() {
   const [, setIsTransitioning] = useState(false);
   
   const bgImages = [
-    "/PacAirEauReal.jpg",
+    "/PacCropped.jpeg",
     "/PlancherChauffant.jpeg"
   ];
 
@@ -152,7 +152,18 @@ export default function Chauffage() {
 
         <section className="my-8 sm:my-12 px-4 sm:px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center max-w-6xl mx-auto">
-            <div className="relative order-2 lg:order-1">
+          <div className="relative">
+              <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-xl">
+                <Image 
+                  src="/PompeChaleurAirAir.webp" 
+                  alt="Schéma pompe à chaleur Air/Eau ClimGo"
+                  width={500}
+                  height={400}
+                  className="w-full h-auto rounded-lg"
+                />
+              </div>
+            </div>
+            <div className="relative">
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 text-gray-800">Pompe à Chaleur <span className="text-green-600">Air/Air</span></h2>
               <div className="text-base sm:text-lg text-gray-700 mb-4 sm:mb-6 leading-relaxed">
                 <p><strong>Du confort toute l&apos;année, sans se ruiner</strong></p>
@@ -181,17 +192,7 @@ export default function Chauffage() {
                 </div>
               </div>
             </div>
-            <div className="relative order-1 lg:order-2">
-              <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-xl">
-                <Image 
-                  src="/PompeChaleurAirAir.webp" 
-                  alt="Schéma pompe à chaleur Air/Eau ClimGo"
-                  width={500}
-                  height={400}
-                  className="w-full h-auto rounded-lg"
-                />
-              </div>
-            </div>
+            
           </div>
         </section>
         <section className="my-8 sm:my-12 px-4 sm:px-6">
@@ -240,7 +241,18 @@ export default function Chauffage() {
         </section>
         <section className="my-8 sm:my-12 px-4 sm:px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center max-w-6xl mx-auto">
-            <div className="relative order-2 lg:order-1">
+          <div className="relative">
+              <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-xl">
+                <Image 
+                  src="/radiateurAnime.webp" 
+                  alt="Schéma pompe à chaleur Air/Eau ClimGo"
+                  width={500}
+                  height={400}
+                  className="w-full h-auto rounded-lg"
+                />
+              </div>
+            </div>
+            <div className="relative">
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 text-yellow-600">Radiateur <span className="text-black">Sèche-serviettes, Électrique et Basse Température</span></h2>
               <div className="text-base sm:text-lg text-gray-700 mb-4 sm:mb-6 leading-relaxed">
                 <p>Le mix parfait entre design et performance</p>
@@ -269,17 +281,7 @@ export default function Chauffage() {
                 </div>
               </div>
             </div>
-            <div className="relative order-1 lg:order-2">
-              <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-xl">
-                <Image 
-                  src="/radiateurAnime.webp" 
-                  alt="Schéma pompe à chaleur Air/Eau ClimGo"
-                  width={500}
-                  height={400}
-                  className="w-full h-auto rounded-lg"
-                />
-              </div>
-            </div>
+            
           </div>
         </section>
 
@@ -414,11 +416,11 @@ export default function Chauffage() {
             padding: 1rem;
           }
           .flip-card-front {
-            background: green;
+            background: #2563eb;
             color: white;
           }
           .flip-card-back {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: #16a34a;
             color: white;
             transform: rotateY(180deg);
           }

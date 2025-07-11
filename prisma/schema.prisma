@@ -78,3 +78,14 @@ model ContactInfos {
   phone     String?
   mail      String?
 }
+
+model GoogleAdvice {
+  id        String   @id @default(cuid()) @map("_id")
+  name      String   @unique
+  content   String
+  visitedDate String?
+  timeAgo   String
+  ratingStar Int      @default(5)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

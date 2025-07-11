@@ -5,18 +5,46 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import Image from 'next/image';
+import { TbSnowflake, TbFlame, TbDroplet, TbTools, TbAward, TbUsers, TbClock, TbSparkles, TbBrain, TbHeart, TbShield, TbLeaf } from 'react-icons/tb';
 
 
 
+
+interface GoogleAdvice {
+  id: string;
+  name: string;
+  content: string;
+  visitedDate?: string;
+  timeAgo: string;
+  ratingStar: number;
+}
 
 export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [, setIsTransitioning] = useState(false);
+  const [googleAdvice, setGoogleAdvice] = useState<GoogleAdvice[]>([]);
   
   const bgImages = [
     "/sdb-pyla.jpeg",
     "/climcauderan.jpeg"
   ];
+
+  // Charger les avis Google
+  useEffect(() => {
+    const fetchGoogleAdvice = async () => {
+      try {
+        const response = await fetch('/api/google-advice');
+        if (response.ok) {
+          const data = await response.json();
+          setGoogleAdvice(data);
+        }
+      } catch (error) {
+        console.error('Erreur lors du chargement des avis Google:', error);
+      }
+    };
+
+    fetchGoogleAdvice();
+  }, []);
 
   // Animation de fond avec crossfade corrigée
   useEffect(() => {
@@ -32,6 +60,11 @@ export default function Home() {
 
     return () => clearInterval(interval);
   }, [bgImages.length]);
+
+  // Générer l'initiale pour l'avatar
+  const getInitial = (name: string) => {
+    return name.charAt(0).toUpperCase();
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
@@ -145,28 +178,28 @@ export default function Home() {
             {/* Eau Chaude Sanitaire */}
             <Link href="/services/eau-chaude-sanitaire" className="flex flex-col w-full items-center bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition-shadow w-1/4">
               <div className="w-14 h-14 mb-3 flex items-center justify-center bg-blue-100 rounded-full">
-                <svg className="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 3v18m0 0c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8z"/></svg>
+                <TbDroplet className="w-8 h-8 text-blue-500" />
               </div>
               <span className="font-semibold text-gray-800 text-lg mb-1">Eau Chaude Sanitaire ↪</span>
             </Link>
             {/* Chauffage */}
             <Link href="/services/chauffage" className="flex flex-col w-full items-center bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition-shadow w-1/4">
               <div className="w-14 h-14 mb-3 flex items-center justify-center bg-orange-100 rounded-full">
-                <svg className="w-8 h-8 text-orange-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 2a7 7 0 017 7c0 3.866-3.134 7-7 7s-7-3.134-7-7a7 7 0 017-7zm0 0v20"/></svg>
+                <TbFlame className="w-8 h-8 text-orange-500" />
               </div>
               <span className="font-semibold text-gray-800 text-lg mb-1">Chauffage ↪</span>
             </Link>
             {/* Climatisation */}
             <Link href="/services/climatisation" className="flex flex-col w-full items-center bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition-shadow w-1/4">
               <div className="w-14 h-14 mb-3 flex items-center justify-center bg-cyan-100 rounded-full">
-                <svg className="w-8 h-8 text-cyan-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M4 12h16M12 4v16m7.07-7.07l-2.83-2.83M6.93 6.93l2.83 2.83m0 0l2.83-2.83m-2.83 2.83l-2.83 2.83"/></svg>
+                <TbSnowflake className="w-8 h-8 text-cyan-500" />
               </div>
               <span className="font-semibold text-gray-800 text-lg mb-1">Climatisation ↪</span>
             </Link>
             {/* Maintenance */}
             <Link href="/services/entretien-et-reparation" className="flex flex-col w-full items-center bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition-shadow w-1/4">
               <div className="w-14 h-14 mb-3 flex items-center justify-center bg-green-100 rounded-full">
-                <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <TbTools className="w-8 h-8 text-green-500" />
               </div>
               <span className="font-semibold text-gray-800 text-lg mb-1">Maintenance ↪</span>
             </Link>
@@ -184,7 +217,7 @@ export default function Home() {
             {/* Qualité */}
             <div className="flex flex-col items-center bg-gray-50 rounded-2xl shadow p-8 hover:shadow-lg transition-shadow">
               <div className="w-14 h-14 mb-4 flex items-center justify-center bg-blue-100 rounded-full">
-                <svg className="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 3v18m0 0c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8z"/></svg>
+                <TbAward className="w-8 h-8 text-blue-500" />
               </div>
               <h3 className="font-semibold text-xl text-gray-800 mb-2">Qualité</h3>
               <p className="text-gray-600">Des installations, rigoureusement sélectionnées et contrôlées.</p>
@@ -192,7 +225,7 @@ export default function Home() {
             {/* Service personnalisé */}
             <div className="flex flex-col items-center bg-gray-50 rounded-2xl shadow p-8 hover:shadow-lg transition-shadow">
               <div className="w-14 h-14 mb-4 flex items-center justify-center bg-green-100 rounded-full">
-                <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <TbUsers className="w-8 h-8 text-green-500" />
               </div>
               <h3 className="font-semibold text-xl text-gray-800 mb-2">Service personnalisé</h3>
               <p className="text-gray-600">Un accompagnement sur mesure, discret et à votre écoute.</p>
@@ -200,7 +233,7 @@ export default function Home() {
             {/* Ponctualité & rigueur */}
             <div className="flex flex-col items-center bg-gray-50 rounded-2xl shadow p-8 hover:shadow-lg transition-shadow">
               <div className="w-14 h-14 mb-4 flex items-center justify-center bg-yellow-100 rounded-full">
-                <svg className="w-8 h-8 text-yellow-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 2a7 7 0 017 7c0 3.866-3.134 7-7 7s-7-3.134-7-7a7 7 0 017-7zm0 0v20"/></svg>
+                <TbClock className="w-8 h-8 text-yellow-500" />
               </div>
               <h3 className="font-semibold text-xl text-gray-800 mb-2">Ponctualité & rigueur</h3>
               <p className="text-gray-600">Intervention à l&apos;heure et respect des délais annoncés.</p>
@@ -208,7 +241,7 @@ export default function Home() {
             {/* Efficacité & Propreté */}
             <div className="flex flex-col items-center bg-gray-50 rounded-2xl shadow p-8 hover:shadow-lg transition-shadow">
               <div className="w-14 h-14 mb-4 flex items-center justify-center bg-cyan-100 rounded-full">
-                <svg className="w-8 h-8 text-cyan-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M4 12h16M12 4v16m7.07-7.07l-2.83-2.83M6.93 6.93l2.83 2.83m0 0l2.83-2.83m-2.83 2.83l-2.83 2.83"/></svg>
+                <TbSparkles className="w-8 h-8 text-cyan-500" />
               </div>
               <h3 className="font-semibold text-xl text-gray-800 mb-2">Efficacité & Propreté</h3>
               <p className="text-gray-600">Une intervention rapide, soignée, et sans surprise.</p>
@@ -236,7 +269,7 @@ export default function Home() {
               {/* Expertise */}
               <div className="flex flex-col items-center bg-gray-50 rounded-2xl shadow p-8 hover:shadow-lg transition-shadow">
                 <div className="w-14 h-14 mb-4 flex items-center justify-center bg-blue-100 rounded-full">
-                  <svg className="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 0v10l6 3"/></svg>
+                  <TbBrain className="w-8 h-8 text-blue-500" />
                 </div>
                 <h3 className="font-semibold text-xl text-gray-800 mb-2">Expertise</h3>
                 <p className="text-gray-600 text-center">Chaque projet est unique. Notre savoir-faire technique et notre maîtrise des dernières innovations garantissent une qualité irréprochable, adaptée à vos attentes les plus exigeantes.</p>
@@ -244,7 +277,7 @@ export default function Home() {
               {/* Accompagnement Personnalisé */}
               <div className="flex flex-col items-center bg-gray-50 rounded-2xl shadow p-8 hover:shadow-lg transition-shadow">
                 <div className="w-14 h-14 mb-4 flex items-center justify-center bg-green-100 rounded-full">
-                  <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+                  <TbHeart className="w-8 h-8 text-green-500" />
                 </div>
                 <h3 className="font-semibold text-xl text-gray-800 mb-2">Accompagnement Personnalisé</h3>
                 <p className="text-gray-600 text-center">Nous prenons le temps de vous écouter pour comprendre précisément vos besoins. Chaque installation est conçue sur mesure, pour un résultat impeccable à votre image.</p>
@@ -252,7 +285,7 @@ export default function Home() {
               {/* Discrétion et Confiance */}
               <div className="flex flex-col items-center bg-gray-50 rounded-2xl shadow p-8 hover:shadow-lg transition-shadow">
                 <div className="w-14 h-14 mb-4 flex items-center justify-center bg-yellow-100 rounded-full">
-                  <svg className="w-8 h-8 text-yellow-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 17a5 5 0 100-10 5 5 0 000 10zm0 0v4m0-4v-4"/></svg>
+                  <TbShield className="w-8 h-8 text-yellow-500" />
                 </div>
                 <h3 className="font-semibold text-xl text-gray-800 mb-2">Discrétion et Confiance</h3>
                 <p className="text-gray-600 text-center">Votre intimité est précieuse. ClimGO s’engage à intervenir dans le plus grand respect de votre vie privée et à assurer une totale confidentialité.</p>
@@ -260,7 +293,7 @@ export default function Home() {
               {/* Engagement Durable */}
               <div className="flex flex-col items-center bg-gray-50 rounded-2xl shadow p-8 hover:shadow-lg transition-shadow">
                 <div className="w-14 h-14 mb-4 flex items-center justify-center bg-cyan-100 rounded-full">
-                  <svg className="w-8 h-8 text-cyan-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7"/></svg>
+                  <TbLeaf className="w-8 h-8 text-cyan-500" />
                 </div>
                 <h3 className="font-semibold text-xl text-gray-800 mb-2">Engagement Durable</h3>
                 <p className="text-gray-600 text-center">Nous privilégions des solutions à haute performance énergétique, respectueuses de l’environnement et pensées pour durer. Choisir ClimGO, c’est investir sereinement dans l’avenir.</p>
@@ -300,7 +333,7 @@ export default function Home() {
                   </svg>
                 ))}
               </div>
-              <span className="text-gray-500 text-sm mt-1">3 avis</span>
+              <span className="text-gray-500 text-sm mt-1">{googleAdvice.length} avis</span>
             </div>
             
             <div className="hidden md:block border-l h-16 mx-6 border-gray-200"></div>
@@ -326,104 +359,100 @@ export default function Home() {
         
         {/* Liste des avis */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Avis 1 */}
-          <div className="bg-gray-50 p-6 rounded-xl shadow hover:shadow-lg transition-shadow flex flex-col h-full">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="w-10 h-10 rounded-full bg-blue-200 flex items-center justify-center font-bold text-blue-700">A</div>
-              <div>
-                <span className="font-semibold text-gray-800">Alice CARDOSO</span>
-                <div className="flex items-center text-yellow-400">
-                  {[...Array(5)].map((_, i) => (
-                    <svg key={i} className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967a1 1 0 00.95.69h4.178c.969 0 1.371 1.24.588 1.81l-3.385 2.46a1 1 0 00-.364 1.118l1.287 3.966c.3.922-.755 1.688-1.54 1.118l-3.385-2.46a1 1 0 00-1.175 0l-3.385 2.46c-.784.57-1.838-.196-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.045 9.394c-.783-.57-.38-1.81.588-1.81h4.178a1 1 0 00.95-.69l1.286-3.967z" />
-                    </svg>
-                  ))}
+          {googleAdvice.length === 0 ? (
+            // Avis par défaut si aucun avis n'est trouvé
+            <div className="col-span-full text-center text-gray-500 py-8">
+              <p>Aucun avis disponible pour le moment.</p>
+            </div>
+          ) : (
+            googleAdvice.map((advice) => (
+              <div key={advice.id} className="bg-gray-50 p-6 rounded-xl shadow hover:shadow-lg transition-shadow flex flex-col h-80">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 rounded-full bg-blue-200 flex items-center justify-center font-bold text-blue-700">
+                    {getInitial(advice.name)}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <span className="font-semibold text-gray-800 truncate block">{advice.name}</span>
+                    <div className="flex items-center text-yellow-400">
+                      {[...Array(advice.ratingStar)].map((_, i) => (
+                        <svg key={i} className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967a1 1 0 00.95.69h4.178c.969 0 1.371 1.24.588 1.81l-3.385 2.46a1 1 0 00-.364 1.118l1.287 3.966c.3.922-.755 1.688-1.54 1.118l-3.385-2.46a1 1 0 00-1.175 0l-3.385 2.46c-.784.57-1.838-.196-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.045 9.394c-.783-.57-.38-1.81.588-1.81h4.178a1 1 0 00.95-.69l1.286-3.967z" />
+                        </svg>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <span className="text-xs text-gray-500 mb-2 truncate">{advice.timeAgo}</span>
+                <div className="flex-grow overflow-hidden">
+                  <p className="text-gray-700 text-sm leading-relaxed overflow-hidden" style={{
+                    display: '-webkit-box',
+                    WebkitLineClamp: 4,
+                    WebkitBoxOrient: 'vertical',
+                    maxHeight: '5rem'
+                  }}>
+                    {advice.content}
+                  </p>
+                  {advice.visitedDate && (
+                    <span className="text-xs text-gray-400 block mt-1 truncate">{advice.visitedDate}</span>
+                  )}
+                </div>
+                {/* Logo Google dans chaque avis */}
+                <div className="flex items-center gap-1 mt-auto pt-3 border-t border-gray-200">
+                  <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                  </svg>
+                  <span className="text-xs text-gray-500 truncate">Publié sur Google</span>
                 </div>
               </div>
-            </div>
-            <span className="text-xs text-gray-500 mb-1">il y a 2 semaines</span>
-            <p className="text-gray-700 mb-2 flex-grow">
-              Clim posée avec soin, super rapport qualité-prix. Merci pour le professionnalisme
-              <br />
-              <span className="text-xs text-gray-400">Visité en juin</span>
-            </p>
-            {/* Logo Google dans chaque avis */}
-            <div className="flex items-center gap-1 mt-auto pt-2">
-              <svg className="w-4 h-4" viewBox="0 0 24 24">
-                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-              </svg>
-              <span className="text-xs text-gray-500">Publié sur Google</span>
-            </div>
-          </div>
-          
-          {/* Avis 2 */}
-          <div className="bg-gray-50 p-6 rounded-xl shadow hover:shadow-lg transition-shadow flex flex-col h-full">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="w-10 h-10 rounded-full bg-blue-200 flex items-center justify-center font-bold text-blue-700">P</div>
-              <div>
-                <span className="font-semibold text-gray-800">Philippe RIVAIN</span>
-                <div className="flex items-center text-yellow-400">
-                  {[...Array(5)].map((_, i) => (
-                    <svg key={i} className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967a1 1 0 00.95.69h4.178c.969 0 1.371 1.24.588 1.81l-3.385 2.46a1 1 0 00-.364 1.118l1.287 3.966c.3.922-.755 1.688-1.54 1.118l-3.385-2.46a1 1 0 00-1.175 0l-3.385 2.46c-.784.57-1.838-.196-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.045 9.394c-.783-.57-.38-1.81.588-1.81h4.178a1 1 0 00.95-.69l1.286-3.967z" />
+            )).concat([
+              // Carte "Voir tous les avis"
+              <a 
+                key="voir-tous-avis"
+                href="https://www.google.fr/maps/place/ClimGO/@44.6965443,-0.8588371,17z/data=!4m8!3m7!1s0x55e91babdbbad05:0x35eae658ca1b3c85!8m2!3d44.6965443!4d-0.8562622!9m1!1b1!16s%2Fg%2F11xkqntvxd?entry=ttu&g_ep=EgoyMDI1MDcwOC4wIKXMDSoASAFQAw%3D%3D" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-blue-50 border-2 border-blue-200 hover:border-blue-300 p-6 rounded-xl shadow hover:shadow-lg transition-all duration-300 flex flex-col h-80 group"
+              >
+                <div className="flex items-center justify-center mb-4">
+                  <div className="w-16 h-16 rounded-full bg-blue-200 flex items-center justify-center group-hover:bg-blue-300 transition-colors">
+                    <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                     </svg>
-                  ))}
+                  </div>
                 </div>
-              </div>
-            </div>
-            <span className="text-xs text-gray-500 mb-1">il y a une semaine</span>
-            <p className="text-gray-700 mb-2 flex-grow">
-              Intervention rapide et efficace sur un changement de carte électronique sur la commune de LANTON
-              <br />
-              <span className="text-xs text-gray-400">Visité en juillet</span>
-            </p>
-            <div className="flex items-center gap-1 mt-auto pt-2">
-              <svg className="w-4 h-4" viewBox="0 0 24 24">
-                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-              </svg>
-              <span className="text-xs text-gray-500">Publié sur Google</span>
-            </div>
-          </div>
-          
-          {/* Avis 3 */}
-          <div className="bg-gray-50 p-6 rounded-xl shadow hover:shadow-lg transition-shadow flex flex-col h-full">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="w-10 h-10 rounded-full bg-blue-200 flex items-center justify-center font-bold text-blue-700">M</div>
-              <div>
-                <span className="font-semibold text-gray-800">Manuela Nunes</span>
-                <div className="flex items-center text-yellow-400">
-                  {[...Array(5)].map((_, i) => (
-                    <svg key={i} className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967a1 1 0 00.95.69h4.178c.969 0 1.371 1.24.588 1.81l-3.385 2.46a1 1 0 00-.364 1.118l1.287 3.966c.3.922-.755 1.688-1.54 1.118l-3.385-2.46a1 1 0 00-1.175 0l-3.385 2.46c-.784.57-1.838-.196-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.045 9.394c-.783-.57-.38-1.81.588-1.81h4.178a1 1 0 00.95-.69l1.286-3.967z" />
+                
+                <div className="flex-grow flex flex-col items-center justify-center text-center">
+                  <h3 className="text-xl font-bold text-blue-700 mb-2 group-hover:text-blue-800 transition-colors">
+                    Voir tous les avis
+                  </h3>
+                  <p className="text-gray-600 text-sm mb-4">
+                    Découvrez tous nos avis clients sur Google Maps
+                  </p>
+                  <div className="flex items-center gap-2 text-blue-600 group-hover:text-blue-700 transition-colors">
+                    <span className="text-sm font-medium">Consulter sur Google</span>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
-                  ))}
+                  </div>
                 </div>
-              </div>
-            </div>
-            <span className="text-xs text-gray-500 mb-1">il y a 3 jours</span>
-            <p className="text-gray-700 mb-2 flex-grow">
-              Installation d&apos;une clim Daikin au top à Salles
-              <br />
-              Après avoir comparé plusieurs devis, j&apos;ai choisi Benjamin de ClimGO pour … Plus
-              <br />
-              <span className="text-xs text-gray-400">Visité en juillet</span>
-            </p>
-            <div className="flex items-center gap-1 mt-auto pt-2">
-              <svg className="w-4 h-4" viewBox="0 0 24 24">
-                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-              </svg>
-              <span className="text-xs text-gray-500">Publié sur Google</span>
-            </div>
-          </div>
+
+                {/* Logo Google dans la carte CTA */}
+                <div className="flex items-center justify-center gap-1 mt-auto pt-3 border-t border-blue-200">
+                  <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                  </svg>
+                  <span className="text-xs text-gray-500">Powered by Google</span>
+                </div>
+              </a>
+            ])
+          )}
         </div>
       </div>
     </section>

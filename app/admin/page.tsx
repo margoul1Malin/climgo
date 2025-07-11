@@ -37,7 +37,7 @@ export default function AdminPage() {
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       <Header />
-      <div className="flex justify-end container mx-auto px-4 mt-4 mt-24">
+      <div className="flex justify-end container mx-auto px-4 mt-4 mt-40">
         <button
           onClick={() => signOut({ callbackUrl: '/' })}
           className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:scale-105"
@@ -71,6 +71,10 @@ export default function AdminPage() {
           <Link href="/admin/contact-infos" className="bg-white rounded-lg shadow-lg p-6 border border-gray-100 hover:shadow-xl transition duration-300">
             <h2 className="text-xl font-semibold text-gray-800 mb-2">Gestion des Infos de Contact</h2>
             <p className="text-gray-600">Modifier les informations de contact.</p>
+          </Link>
+          <Link href="/admin/google-advice" className="bg-white rounded-lg shadow-lg p-6 border border-gray-100 hover:shadow-xl transition duration-300">
+            <h2 className="text-xl font-semibold text-gray-800 mb-2">Gestion des Avis Google</h2>
+            <p className="text-gray-600">Ajouter, modifier ou supprimer les avis Google affichés sur le site.</p>
           </Link>
         </div>
       </main>

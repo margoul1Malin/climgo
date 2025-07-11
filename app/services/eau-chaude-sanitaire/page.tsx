@@ -11,8 +11,8 @@ export default function EauChaudeSanitaire() {
     const [, setIsTransitioning] = useState(false);
   
   const bgImages = [
-    "/gainable-arca.jpeg",
-    "/climcauderan.jpeg"
+    "/sdb-toulouse.png",
+    "/Cumulus_cropped.jpeg"
   ];
 
   // Animation de fond avec crossfade corrigée
@@ -152,7 +152,19 @@ export default function EauChaudeSanitaire() {
         </section>
         <section className="my-8 sm:my-12 px-4 sm:px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center max-w-6xl mx-auto">
-            <div className="relative order-2 lg:order-1">
+          
+          <div className="relative">
+              <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-xl">
+                <Image 
+                  src="/AnimeChauffeEauElec.webp" 
+                  alt="Schéma pompe à chaleur Air/Eau ClimGo"
+                  width={500}
+                  height={400}
+                  className="w-full h-auto rounded-lg"
+                />
+              </div>
+            </div>
+            <div className="relative">
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 text-red-600">Chauffe-Eau Electrique</h2>
               <div className="text-base sm:text-lg text-gray-700 mb-4 sm:mb-6 leading-relaxed">
                 <strong>Une solution d&apos;eau chaude sanitaire simple et fiable pour votre quotidien</strong><br/>
@@ -179,17 +191,6 @@ export default function EauChaudeSanitaire() {
                     <Button className="bg-red-600 text-white hover:bg-red-700 w-full py-3 px-6 transition-all duration-300 cursor-pointer">Demander un devis</Button>
                   </Link>
                 </div>
-              </div>
-            </div>
-            <div className="relative order-1 lg:order-2">
-              <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-xl">
-                <Image 
-                  src="/AnimeChauffeEauElec.webp" 
-                  alt="Schéma pompe à chaleur Air/Eau ClimGo"
-                  width={500}
-                  height={400}
-                  className="w-full h-auto rounded-lg"
-                />
               </div>
             </div>
           </div>
@@ -345,11 +346,11 @@ export default function EauChaudeSanitaire() {
             padding: 1rem;
           }
           .flip-card-front {
-            background: green;
+            background: #2563eb;
             color: white;
           }
           .flip-card-back {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: #16a34a;
             color: white;
             transform: rotateY(180deg);
           }
